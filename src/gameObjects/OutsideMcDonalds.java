@@ -38,6 +38,7 @@ public class OutsideMcDonalds extends Level {
 		
 		collision.add (new Rectangle (207, 82, 494, 291));
 		collision.add (new Rectangle (0, 191, 69, 128));
+		collision.add (new Rectangle (676, 2, 20, 37));
 		
 		new Tras ().declare (24, 274);
 		new Tras ().declare (24, 252);

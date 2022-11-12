@@ -10,6 +10,7 @@ public class RockSource extends GameObject {
 	private static EnterForRocks rockIndicator = new EnterForRocks ();
 	
 	private int rockCount = 0;
+	private boolean tooManyRocks = false;
 	
 	public RockSource (Rectangle bounds) {
 		this.setHitboxAttributes (bounds.x, bounds.y, bounds.width, bounds.height);
@@ -30,8 +31,13 @@ public class RockSource extends GameObject {
 		return r;
 		} else {
 			rockIndicator.setTooManyRocks ();
+			tooManyRocks = true;
 			return null;
 		}
+	}
+	
+	public boolean sourceEmpty () {
+		return tooManyRocks;
 	}
 
 }

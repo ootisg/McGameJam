@@ -10,16 +10,13 @@ import engine.Sprite;
 
 public class Player extends GameObject {
 	
-<<<<<<< HEAD
 	public GameObject carrying;
-=======
 	public static final Sprite IDLE = new Sprite ("resources/sprites/daveIdle.txt");
 	public static final Sprite SIDE = new Sprite ("resources/sprites/daveWalkSide.txt");
 	public static final Sprite UP = new Sprite ("resources/sprites/daveUp.txt");
 	public static final Sprite DOWN = new Sprite ("resources/sprites/daveDown.txt");
 	
-	
->>>>>>> a8232c082f7ba510851177ff6090c00063bb5021
+	public int lastDirection = 0; //0 for right, 1 for left
 	
 	public Player () {
 		setSprite (IDLE);
@@ -43,6 +40,7 @@ public class Player extends GameObject {
 			this.getAnimationHandler().setFlipHorizontal(true);
 			setX (getX () - 3);
 			this.getAnimationHandler().setFrameTime(50);
+			lastDirection = 1;
 		}
 		if (keyDown ('S')) {
 			if (!keyDown('A') && !keyDown ('D')) {
@@ -56,6 +54,7 @@ public class Player extends GameObject {
 			this.getAnimationHandler().setFlipHorizontal(false);
 			setX (getX () + 3);
 			this.getAnimationHandler().setFrameTime(50);
+			lastDirection = 0;
 		}
 		if (!keyDown ('W') && !keyDown ('S') && !keyDown ('A') && !keyDown ('D') ) {
 			if (this.getSprite().equals(SIDE) || this.getSprite().equals(IDLE)) {
@@ -71,7 +70,7 @@ public class Player extends GameObject {
 		}
 		if (keyPressed(KeyEvent.VK_ENTER)) {
 			if (carrying == null) {
-				if (isColliding ("RockSource")) {
+				if (isColliding ("RockSource") && !((RockSource)this.getCollisionInfo ().getCollidingObjects ().get (0)).sourceEmpty ()) {
 					RockSource rs = (RockSource)this.getCollisionInfo ().getCollidingObjects ().get (0);
 					Rock r = rs.generateRock ();
 					if (r != null) {
@@ -100,6 +99,9 @@ public class Player extends GameObject {
 					}
 				}
 			} else {
+				int frontOffset = lastDirection == 0 ? 24 : -24;
+				carrying.setX (getX () + hitbox ().width / 2 - carrying.hitbox ().width / 2 + frontOffset);
+				carrying.setY (getY () + hitbox ().height - carrying.hitbox ().height);
 				carrying = null;
 			}
 		}
