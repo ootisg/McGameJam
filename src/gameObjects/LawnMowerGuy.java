@@ -42,8 +42,19 @@ public class LawnMowerGuy extends TalkableNPC{
 				this.getCollisionInfo().getCollidingObjects().get(0).forget();
 				this.getAnimationHandler().setFrameTime(0);
 				dead = true;
+				
+				Lawnmower l = new Lawnmower ();
+				l.setX(this.getX());
+				l.setY(this.getY());
+				
+				l.breakMower();
+				this.setSprite(new Sprite ("resources/sprites/lawnmower blown up.png"));
 			}
 		}
+	}
+	
+	public boolean isBlownUp () {
+		return dead;
 	}
 	
 	public class Lawnmower extends GameObject {

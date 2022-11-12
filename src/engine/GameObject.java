@@ -143,6 +143,9 @@ public abstract class GameObject extends GameAPI {
 	
 	double prevAngle;
 	
+	public double direction = -1;
+	public double speed = 0;
+	
 	Point iris;
 	
 	private Point focusPoint = null;
@@ -436,7 +439,10 @@ public abstract class GameObject extends GameAPI {
 	 * Runs at every iteration of GameLoop
 	 */
 	public void frameEvent () {
-		
+		if (direction != -1) {
+			this.setX(this.getX() + (Math.cos(direction)*speed));
+			this.setY(this.getY() - (Math.sin(direction)*speed));
+		}
 	}
 	//Runs when the game is paused
 	public void pausedEvent() {
@@ -771,10 +777,10 @@ public abstract class GameObject extends GameAPI {
 		
 	}
 	
-//	public void throwObj (double direction, double speed) {
-//		this.direction = direction;
-//		this.speed = speed;
-//	}
+	public void throwObj (double direction, double speed) {
+		this.direction = direction;
+		this.speed = speed;
+	}
 	
 	/**
 	 * returns all of the hitboxes that this object has that are collding with a specified second object

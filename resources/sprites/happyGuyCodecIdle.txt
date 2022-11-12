@@ -1,0 +1,3 @@
+$src resources/sprites/happyGuyCodec.png
+
+ rectangle 0 0 250 218

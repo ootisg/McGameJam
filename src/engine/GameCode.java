@@ -23,6 +23,8 @@ public class GameCode {
 	
 
 	static ArrayList <Asker> askers = new ArrayList <Asker> ();
+	
+	static SoundPlayer s;
 
 
 	public static void testBitch () {
@@ -43,7 +45,7 @@ public class GameCode {
 		Level outside = new OutsideMcDonalds ();
 		currentLevel = outside;
 		outside.load ();
-		
+		s = new SoundPlayer();
 		
 		
 		//CodecConversation1 test = new CodecConversation1();
@@ -62,6 +64,9 @@ public class GameCode {
 		
 	}
 	
+	public static SoundPlayer getSoundPlayer () {
+		return s;
+	}
 	
 	public static void gameLoopFunc () {
 		

@@ -25,8 +25,15 @@ public class LawnMowerConversation extends CodecConversation{
 		}
 		
 		if (t.isEmpty()) {
-			if (conversationState == 2) {
+			if (conversationState == 3) {
 				fadeOut = true;
+			}
+			if (conversationState == 2) {
+				t.pushString("~Cwhite~ALRIGHT ITS TIME TO JAM THAT MOWER");
+				t.advanceText();
+				this.setConverser1Sprite(new Sprite ("resources/sprites/daveCodecTalk.txt"));
+				this.setConverser2Sprite(new Sprite ("resources/sprites/lawnmowerCodecIdle.txt"));
+				conversationState = 3;
 			}
 			if (conversationState == 1) {
 				t.pushString("~Cwhite~YEAH I JUST GOT MY LAWNMOWER BACK FROM THE SHOP!  I RAN IT INTO A ROCK AND THE WHOLE THING BROKE BEEN WAITING TO MOW THIS GRASS FOR A FEW WEEKS NOW");
