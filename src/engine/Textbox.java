@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Stack;
 
-import gameObjects.LetterBomb;
 import map.Room;
 
 
@@ -918,10 +917,6 @@ public void explodeOldText()
 			}
 		}	
 		
-		LetterBomb b = new LetterBomb (drawChar);
-		b.declare(xPos + Room.getViewX(),yPos + Room.getViewY());
-		b.setRenderPriority(this.getRenderPriority());
-		
 		xPos = xPos + textSize;
 		
 	}
@@ -1311,7 +1306,7 @@ private int dealWithTilde (String message, int startI) {
 public void draw () {
 		Rectangle thisRect = new Rectangle ((int)this.getX(), (int)this.getY(), this.width, this.height);
 	
-		Rectangle veiwport = new Rectangle ((int) Room.getViewX(), (int) Room.getViewY(), GameCode.getResolutionX (), GameCode.getResolutionY ());
+		Rectangle veiwport = new Rectangle ((int) Room.getViewX(), (int) Room.getViewY(), 960,540);
 		if (thisRect.intersects(veiwport)) {
 			this.drawBox();
 		}
