@@ -15,7 +15,11 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
-import gameObjects.Reporter;
+import gameObjects.Backgrounder;
+import gameObjects.Level;
+import gameObjects.OutsideMcDonalds;
+import gameObjects.Overlayer;
+import gameObjects.Player;
 import map.Room;
 
 
@@ -24,6 +28,8 @@ public class GameCode {
 	
 	static int veiwX;
 	static int veiwY;
+	
+	static Level currentLevel;
 	
 
 	public static void testBitch () {
@@ -40,7 +46,9 @@ public class GameCode {
 	}
 
 	public static void init () {
-		
+		Level outside = new OutsideMcDonalds ();
+		currentLevel = outside;
+		outside.load ();
 	}
 		
 	
@@ -87,6 +95,10 @@ public class GameCode {
 
 	public static void setViewY(int newVeiwY) {
 		veiwY = newVeiwY;
+	}
+	
+	public static Level getLevel () {
+		return currentLevel;
 	}
 
 
