@@ -1,0 +1,3 @@
+$src resources/sprites/lawnmower codec.png
+
+ grid 250 218

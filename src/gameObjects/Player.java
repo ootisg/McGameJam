@@ -50,8 +50,12 @@ public class Player extends GameObject {
 			this.getAnimationHandler().setFrameTime(50);
 		}
 		if (!keyDown ('W') && !keyDown ('S') && !keyDown ('A') && !keyDown ('D') ) {
-			this.setSprite(IDLE);
-			this.getAnimationHandler().setFrameTime(100);
+			if (this.getSprite().equals(SIDE) || this.getSprite().equals(IDLE)) {
+				this.setSprite(IDLE);
+				this.getAnimationHandler().setFrameTime(100);
+			} else {
+				this.getAnimationHandler().setFrameTime(0);
+			}
 		}
 		if (GameCode.getLevel ().isColliding (this)) {
 			setX (xprev);
