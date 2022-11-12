@@ -22,6 +22,7 @@ public class Player extends GameObject {
 		setSprite (IDLE);
 		this.useSpriteHitbox();
 		this.getAnimationHandler().setFrameTime(50);
+		setRenderPriority (1);
 	}
 	
 	@Override
