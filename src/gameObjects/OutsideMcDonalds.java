@@ -11,9 +11,11 @@ public class OutsideMcDonalds extends Level {
 
 	private Backgrounder bg;
 	private Overlayer ol;
-	private Player player;
 	
-	private ArrayList<Rectangle> collision;
+	LawnMowerGuy guy = new LawnMowerGuy();
+	
+	
+	
 	
 	public OutsideMcDonalds () {
 		collision = new ArrayList<Rectangle> ();
@@ -26,9 +28,13 @@ public class OutsideMcDonalds extends Level {
 		ol = new Overlayer (new Sprite ("resources/bg/mcoverlay.png"), new Rectangle (111, 62, 673, 380));
 		player = new Player ();
 		
+		
+		
 		bg.declare ();
 		ol.declare ();
 		player.declare ();
+		
+		guy.declare(690, 505);
 		
 		collision.add (new Rectangle (207, 82, 494, 291));
 		collision.add (new Rectangle (0, 191, 69, 128));

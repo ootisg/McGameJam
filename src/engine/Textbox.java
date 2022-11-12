@@ -530,9 +530,6 @@ public class Textbox extends GameObject {
 	public void advanceText() {
 	//	System.out.println(reserveMessages);
 		if (!reserveMessages.isEmpty()) {
-			if (this.font.equals("Bomb")) {
-				this.explodeOldText();
-			}
 			
 			//pop the new regular message into the box
 			//its worth noteing that there will NEVER be a query message as the next message for here because if there was it would have been poped on automatically before it makes it here

@@ -16,23 +16,40 @@ public class CodecConversation extends GameObject{
 	Textbox t = new Textbox ("~P50~");
 	
 	CodecBackground cb = new CodecBackground ();
+	CodecText text = new CodecText();
+	CodecCenterpeice center = new CodecCenterpeice();
+	
 	double opacity = 1.0;
+	
+	boolean fadeIn = true;
+	boolean fadeOut = false;
 	
 	public CodecConversation () {
 		converser1.setX(110);
-		converser1.setY(128);
+		converser1.setY(168);
+		converser1.getAnimationHandler().setFrameTime(100);
 		
 		converser2.setX(580);
-		converser2.setY(128);
+		converser2.setY(168);
 		converser2.getAnimationHandler().setFlipHorizontal(true);
+		converser2.getAnimationHandler().setFrameTime(100);
+		
+		text.setX(250);
+		text.setY(40);
 		
 		t.setX(110);
-		t.setY(350);
+		t.setY(410);
 		t.changeWidth(45);
 		t.changeHeight(8);
 		
+		center.setX(360);
+		center.setY(168);
+		
+		
 		//t.changeBoxVisability();
 		
+		
+		this.setRenderPriority(100);
 	}
 
 	public void setConverser1Sprite (Sprite s) {
@@ -51,36 +68,120 @@ public class CodecConversation extends GameObject{
 		converser2.setSpriteAppear(s);
 	}
 	
+	public void cleanUp() {
+		fadeOut = true;
+	}
 	
 	@Override
 	public void draw () {
 		cb.draw();
+		center.draw();
 		converser1.draw();
 		converser2.draw();
 		t.draw();
+		text.draw();
 		
-		if (opacity > 0) {
+		if (fadeIn) {
 			opacity = opacity - .03;
 			if (opacity < 0) {
 				opacity = 0;
+				fadeIn = false;
 			}
 			Graphics g = RenderLoop.wind.getBufferGraphics();
 			g.setColor(new Color (0,0,0,(int)(opacity*255)));
 			g.fillRect(0,0,960,540);
 		}
+		
+		if (fadeOut) {
+			opacity = opacity + .03;
+			if (opacity > 1) {
+				opacity = 1;
+				this.forget();
+				this.reset();
+			}
+			Graphics g = RenderLoop.wind.getBufferGraphics();
+			g.setColor(new Color (0,0,0,(int)(opacity*255)));
+			g.fillRect(0,0,960,540);
+		}
+		
+		
 	}
 	
+	public void reset()
+	{
+		fadeIn = true;
+		fadeOut = false;
+		
+		t = new Textbox ("~P50~");
+		 
+		converser1 = new Converser();
+		converser2 = new Converser();
+		
+		converser1.setX(110);
+		converser1.setY(168);
+		converser1.getAnimationHandler().setFrameTime(100);
+		
+		converser2.setX(580);
+		converser2.setY(168);
+		converser2.getAnimationHandler().setFlipHorizontal(true);
+		converser2.getAnimationHandler().setFrameTime(100);
+		
+		t.setX(110);
+		t.setY(410);
+		t.changeWidth(45);
+		t.changeHeight(8);
+		
+		text = new CodecText();
+		text.setX(250);
+		text.setY(40);
+		
+		CodecCenterpeice center = new CodecCenterpeice();
+		center.setX(300);
+		center.setY(168);
+		
+	}
 	@Override
 	public void frameEvent () {
 		converser1.frameEvent();
 		converser2.frameEvent();
 		t.frameEvent();
+		text.frameEvent();
 	}
 	
 	public class CodecBackground extends GameObject {
 		public CodecBackground() {
 			this.setSprite(new Sprite ("resources/sprites/codecBackground.png"));
 		}
+	}
+	
+	public class CodecCenterpeice extends GameObject {
+		public CodecCenterpeice() {
+			this.setSprite(new Sprite ("resources/sprites/codecCenterpiece.txt"));
+			this.getAnimationHandler().setFrameTime(500);
+		}
+	}
+	
+	public class CodecText extends GameObject {
+		
+		int timer = 0;
+	
+		public CodecText() {
+			this.setSprite(new Sprite ("resources/sprites/codec text.png"));
+		}
+		
+		@Override
+		public void frameEvent () {
+			timer = timer + 1;
+			if (timer == 30) {
+				timer = 0;
+				if (this.isVisable()) {
+					this.hide();
+				} else {
+					this.show();
+				}
+			}
+		}
+		
 	}
 	
 	public class Converser extends GameObject {

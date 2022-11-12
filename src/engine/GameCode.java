@@ -9,6 +9,7 @@ import gameObjects.Overlayer;
 import gameObjects.Player;
 import gameObjects.CodecConversation1;
 import gameObjects.Dave;
+import gameObjects.LawnMowerGuy;
 import map.Room;
 
 
@@ -42,11 +43,17 @@ public class GameCode {
 		Level outside = new OutsideMcDonalds ();
 		currentLevel = outside;
 		outside.load ();
+		
+		
+		
 		//CodecConversation1 test = new CodecConversation1();
 		//test.declare();
 		
-		Dave d = new Dave ();
-		d.declare(100, 200);
+//		McdonaldsEmployee m = new McdonaldsEmployee ();
+//		m.declare(000,100);
+		
+//		Dave d = new Dave ();
+//		d.declare(100, 200);
 
 	}
 		

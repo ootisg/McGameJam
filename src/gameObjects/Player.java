@@ -10,11 +10,21 @@ import engine.Sprite;
 
 public class Player extends GameObject {
 	
+<<<<<<< HEAD
 	public GameObject carrying;
+=======
+	public static final Sprite IDLE = new Sprite ("resources/sprites/daveIdle.txt");
+	public static final Sprite SIDE = new Sprite ("resources/sprites/daveWalkSide.txt");
+	public static final Sprite UP = new Sprite ("resources/sprites/daveUp.txt");
+	public static final Sprite DOWN = new Sprite ("resources/sprites/daveDown.txt");
+	
+	
+>>>>>>> a8232c082f7ba510851177ff6090c00063bb5021
 	
 	public Player () {
-		setSprite (new Sprite ("resources/sprites/player.png"));
-		this.setHitboxAttributes (16, 16);
+		setSprite (IDLE);
+		this.useSpriteHitbox();
+		this.getAnimationHandler().setFrameTime(50);
 	}
 	
 	@Override
@@ -22,16 +32,38 @@ public class Player extends GameObject {
 		double xprev = getX ();
 		double yprev = getY ();
 		if (keyDown ('W')) {
+			if (!keyDown('A') && !keyDown ('D')) {
+				this.setSprite(UP);
+				this.getAnimationHandler().setFrameTime(100);
+			}
 			setY (getY () - 3);
 		}
 		if (keyDown ('A')) {
+			this.setSprite(SIDE);
+			this.getAnimationHandler().setFlipHorizontal(true);
 			setX (getX () - 3);
+			this.getAnimationHandler().setFrameTime(50);
 		}
 		if (keyDown ('S')) {
+			if (!keyDown('A') && !keyDown ('D')) {
+				this.setSprite(DOWN);
+				this.getAnimationHandler().setFrameTime(100);
+			}
 			setY (getY () + 3);
 		}
 		if (keyDown ('D')) {
+			this.setSprite(SIDE);
+			this.getAnimationHandler().setFlipHorizontal(false);
 			setX (getX () + 3);
+			this.getAnimationHandler().setFrameTime(50);
+		}
+		if (!keyDown ('W') && !keyDown ('S') && !keyDown ('A') && !keyDown ('D') ) {
+			if (this.getSprite().equals(SIDE) || this.getSprite().equals(IDLE)) {
+				this.setSprite(IDLE);
+				this.getAnimationHandler().setFrameTime(100);
+			} else {
+				this.getAnimationHandler().setFrameTime(0);
+			}
 		}
 		if (GameCode.getLevel ().isColliding (this)) {
 			setX (xprev);
@@ -75,6 +107,10 @@ public class Player extends GameObject {
 			carrying.setX (getX () + 8 - carrying.hitbox ().width / 2);
 			carrying.setY (getY () - carrying.hitbox ().height);
 		}
+	}
+	
+	public void die () {
+		
 	}
 
 	@Override
