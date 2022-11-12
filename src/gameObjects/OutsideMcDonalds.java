@@ -14,7 +14,7 @@ public class OutsideMcDonalds extends Level {
 	
 	LawnMowerGuy guy = new LawnMowerGuy();
 	
-	public static final Sprite coolaidBreakIn = new Sprite ("resources/sprites/coolaidman_breakin.png");
+	public static final Sprite coolaidBreakIn = new Sprite ("resources/bg/coolaidman_breakin.png");
 	
 	public OutsideMcDonalds () {
 		collision = new ArrayList<Rectangle> ();
@@ -30,6 +30,10 @@ public class OutsideMcDonalds extends Level {
 		bg.declare ();
 		ol.declare ();
 		player.declare ();
+		
+		Entrance entr = new Entrance (coolaidBreakIn);
+		entr.declare (254, 45);
+		entr.setHitboxAttributes (87, 37);
 		
 		guy.declare(690, 505);
 		
