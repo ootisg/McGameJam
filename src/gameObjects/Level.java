@@ -13,7 +13,7 @@ public class Level {
 	}
 	
 	public boolean isColliding (GameObject obj) {
-		
+		return false;
 	}
 
 }

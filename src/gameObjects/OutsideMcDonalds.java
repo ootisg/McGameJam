@@ -31,6 +31,14 @@ public class OutsideMcDonalds extends Level {
 		player.declare ();
 		
 		collision.add (new Rectangle (207, 82, 494, 291));
+		collision.add (new Rectangle (0, 191, 69, 128));
+		
+		new Tras ().declare (24, 274);
+		new Tras ().declare (24, 252);
+		new Tras ().declare (24, 230);
+		new Tras ().declare (24, 208);
+		
+		new RockSource (new Rectangle (289, 373, 170, 58)).declare ();
 		
 	}
 	
