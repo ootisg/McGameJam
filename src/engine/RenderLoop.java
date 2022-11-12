@@ -35,6 +35,7 @@ public class RenderLoop {
 		while (!GameLoop.hasRun ()) {/*wait*/}
 		//Initializes lastUpdate to the current time
 		lastUpdate = System.nanoTime ();
+		GameCode.init();
 		while (true) {
 			//Get the target time in nanoseconds for this iteration; should be constant if the framerate doesn't change
 			long targetNanoseconds = (long)(1000000000 / maxFramerate);

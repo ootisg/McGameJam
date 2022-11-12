@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
+import java.awt.Color;
 
 
 
@@ -47,6 +48,8 @@ public class Sprite {
 	 * does this get scalled by the changes of resolution
 	 */
 	protected boolean doesScale = true;
+	
+	private float opacity = 1;
 	
 	/**
 	 * 
@@ -120,7 +123,6 @@ public class Sprite {
 		File imageFile = new File (imagepath);
 		BufferedImage img = null;
 		try {
-			System.out.println(imagepath);
 			img = ImageIO.read (imageFile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -156,7 +158,6 @@ public class Sprite {
 				File imageFile = new File (imagepath);
 				BufferedImage img = null;
 				try {
-					System.out.println(imageFile);
 					img = ImageIO.read (imageFile);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -176,7 +177,19 @@ public class Sprite {
 	 * @param sprite The Sprite object to copy
 	 */
 	public Sprite (Sprite sprite) {
-		this.images = sprite.images;
+		
+		this.images = new BufferedImage[sprite.images.length];
+		
+		for (int i = 0; i < sprite.images.length; i++) {
+			BufferedImage bimage = new BufferedImage(sprite.images[i].getWidth(null), sprite.images[i].getHeight(null), BufferedImage.TYPE_INT_ARGB);
+			
+			Graphics2D bGr = bimage.createGraphics();
+		    bGr.drawImage(sprite.images[i], 0, 0, null);
+		    bGr.dispose();
+		    
+		    this.images[i] = bimage;
+		}
+		
 		this.isAnimated = sprite.isAnimated;
 		this.imagePath = sprite.imagePath;
 		this.parsePath = sprite.parsePath;
@@ -469,6 +482,87 @@ public class Sprite {
 			toScale.setFrame(i,bimage);
 		}
 	}
+	
+	public static void tweekHue (Sprite toTweek, double tweekBy) {
+		for (int i = 0; i < toTweek.getFrameCount(); i++) {
+			BufferedImage bimage = new BufferedImage(toTweek.getFrame(i).getWidth(null), toTweek.getFrame(i).getHeight(null), BufferedImage.TYPE_INT_ARGB);
+			
+			Graphics2D bGr = bimage.createGraphics();
+		    bGr.drawImage(toTweek.getFrame(i), 0, 0, null);
+		    bGr.dispose();
+			
+			for (int j = 0; j < bimage.getWidth(); j++) {
+				for (int h = 0; h < bimage.getHeight(); h++) {
+					float originalCol [] = new float [3];
+					
+					int originalRGB = bimage.getRGB(j,h);
+					
+					Color.RGBtoHSB((bimage.getRGB(j,h) & 0x00FF0000) >> 16,(bimage.getRGB(j,h) & 0x0000FF00) >> 8,bimage.getRGB(j,h) & 0x000000FF,originalCol);
+					
+					bimage.setRGB(j,h,Color.HSBtoRGB((float) (originalCol[0] + tweekBy),originalCol[1],originalCol[2]) & ((originalRGB & 0xFF000000) + 0x00FFFFFF));
+					
+				}
+			}
+			toTweek.setFrame(i,bimage);
+		}
+	}
+	
+	//returns new version of color
+	public static int tweekHueifColorMatch (Sprite toTweek, double tweekBy, int colorToMatch) {
+		int newVersion = 0;
+		
+		for (int i = 0; i < toTweek.getFrameCount(); i++) {
+			BufferedImage bimage = new BufferedImage(toTweek.getFrame(i).getWidth(null), toTweek.getFrame(i).getHeight(null), BufferedImage.TYPE_INT_ARGB);
+			
+			Graphics2D bGr = bimage.createGraphics();
+		    bGr.drawImage(toTweek.getFrame(i), 0, 0, null);
+		    bGr.dispose();
+			for (int j = 0; j < bimage.getWidth(); j++) {
+				for (int h = 0; h < bimage.getHeight(); h++) {
+					float originalCol [] = new float [3];
+					
+					int originalRGB = bimage.getRGB(j,h);
+					
+					if (originalRGB == colorToMatch) {
+						Color.RGBtoHSB((bimage.getRGB(j,h) & 0x00FF0000) >> 16,(bimage.getRGB(j,h) & 0x0000FF00) >> 8,bimage.getRGB(j,h) & 0x000000FF,originalCol);
+					
+						bimage.setRGB(j,h,Color.HSBtoRGB((float) (originalCol[0] + tweekBy),originalCol[1],originalCol[2]) & ((originalRGB & 0xFF000000) + 0x00FFFFFF));
+						
+						
+						
+						newVersion = bimage.getRGB(j,h);
+					}
+				}
+			}
+			toTweek.setFrame(i,bimage);
+		}
+		return newVersion;
+	}
+	
+	public static void replaceColor (Sprite toTweek, int newColor, int oldColor) {
+		
+		for (int i = 0; i < toTweek.getFrameCount(); i++) {
+			BufferedImage bimage = new BufferedImage(toTweek.getFrame(i).getWidth(null), toTweek.getFrame(i).getHeight(null), BufferedImage.TYPE_INT_ARGB);
+			
+			Graphics2D bGr = bimage.createGraphics();
+		    bGr.drawImage(toTweek.getFrame(i), 0, 0, null);
+		    bGr.dispose();
+			
+			for (int j = 0; j < bimage.getWidth(); j++) {
+				for (int h = 0; h < bimage.getHeight(); h++) {
+					
+					int originalRGB = bimage.getRGB(j,h);
+					
+					if (originalRGB == oldColor) {
+						
+						bimage.setRGB(j,h,newColor);
+					}
+				}
+			}
+			toTweek.setFrame(i,bimage);
+		}
+	}
+	
 	/**
 	 * Gets the BufferedImage associated with the given filepath.
 	 * @param path the filepath to use
@@ -501,15 +595,53 @@ public class Sprite {
 		this.doesScale = doesScale;
 	}
 	
-	//lol got this from stack overflow
-	public void setOpacity (float opacity, int frame) {
-		BufferedImage newImg = new BufferedImage (this.getFrame(frame).getWidth(), this.getFrame(frame).getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
-		Graphics2D g = (Graphics2D) newImg.getGraphics();
-		AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,(float) opacity);
-		g.setComposite(ac);
-		g.drawImage(this.getFrame(frame), 0, 0, newImg.getWidth(), newImg.getHeight(), null);
-		this.setFrame(frame, newImg);
+	public static BufferedImage [] getScaledArr (Sprite toScale, int width, int height) {
+		
+		BufferedImage [] buff = new BufferedImage [toScale.getFrameCount()];
+		
+		for (int i = 0; i < toScale.getFrameCount(); i++) {
+			Image img = toScale.getFrame(i).getScaledInstance(width, height, Image.SCALE_FAST);
+			BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+			Graphics2D bGr = bimage.createGraphics();
+		    bGr.drawImage(img, 0, 0, null);
+		    
+		    buff[i] = bimage;
+		}
+		return buff;
 	}
+	
+	//lol got this from stack overflow
+		public void setOpacity (float opacity, int frame) {
+			
+			BufferedImage newImg = new BufferedImage (this.getFrame(frame).getWidth(), this.getFrame(frame).getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+			Graphics2D g = (Graphics2D) newImg.getGraphics();
+			AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,(float) opacity);
+			g.setComposite(ac);
+			g.drawImage(this.getFrame(frame), 0, 0, newImg.getWidth(), newImg.getHeight(), null);
+			this.setFrame(frame, newImg);
+			this.opacity = opacity;
+			
+			
+		}
+		
+		public void setOpacity (float opacity) {
+			
+			
+			for (int i = 0; i < this.getFrameCount(); i++) {
+				BufferedImage newImg = new BufferedImage (this.getFrame(i).getWidth(), this.getFrame(i).getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+				Graphics2D g = (Graphics2D) newImg.getGraphics();
+				AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity);
+				g.setComposite(ac);
+				g.drawImage(this.getFrame(i), 0, 0, newImg.getWidth(), newImg.getHeight(), null);
+				this.setFrame(i, newImg);
+				this.opacity = opacity;
+			}
+			
+		}
+		
+		public float getOpacity () {
+			return opacity;
+		}
 	
 	private static class CacheNode {
 		

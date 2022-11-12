@@ -15,6 +15,8 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
+import gameObjects.CodecConversation1;
+import gameObjects.Dave;
 import gameObjects.Reporter;
 import map.Room;
 
@@ -40,7 +42,9 @@ public class GameCode {
 	}
 
 	public static void init () {
-		
+//		CodecConversation1 test = new CodecConversation1 ();
+//		test.declare(0,0);
+
 	}
 		
 	
