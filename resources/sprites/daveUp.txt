@@ -1,3 +1,3 @@
 $src resources/sprites/Dave (Main Character) Up-sheet.png
 
- grid 36 74
+ grid 18 36

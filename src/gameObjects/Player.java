@@ -10,16 +10,12 @@ import engine.Sprite;
 
 public class Player extends GameObject {
 	
-<<<<<<< HEAD
 	public GameObject carrying;
-=======
 	public static final Sprite IDLE = new Sprite ("resources/sprites/daveIdle.txt");
 	public static final Sprite SIDE = new Sprite ("resources/sprites/daveWalkSide.txt");
 	public static final Sprite UP = new Sprite ("resources/sprites/daveUp.txt");
 	public static final Sprite DOWN = new Sprite ("resources/sprites/daveDown.txt");
 	
-	
->>>>>>> a8232c082f7ba510851177ff6090c00063bb5021
 	
 	public Player () {
 		setSprite (IDLE);
