@@ -1023,13 +1023,17 @@ public abstract class GameObject extends GameAPI {
 	 * @param sprite The sprite to use
 	 */
 	public void setSprite (Sprite sprite) {
-		if (this.getSpriteX() - this.getX() != 0) {
-			this.desyncSpriteX(0);
-		}
-		sprite.setScale(doesScale);
-		animationHandler.resetImage (sprite);
-		if (spriteHitbox) {
-			this.setHitboxAttributes(0, 0, this.getSprite().getWidth(), this.getSprite().getHeight());
+		
+		
+		if (this.getSprite() == null || !this.getSprite().equals(sprite)) {
+			if (this.getSpriteX() - this.getX() != 0) {
+				this.desyncSpriteX(0);
+			}
+			sprite.setScale(doesScale);
+			animationHandler.resetImage (sprite);
+			if (spriteHitbox) {
+				this.setHitboxAttributes(0, 0, this.getSprite().getWidth(), this.getSprite().getHeight());
+			}
 		}
 	}
 	public boolean doesScale() {

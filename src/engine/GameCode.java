@@ -45,8 +45,11 @@ public class GameCode {
 		//CodecConversation1 test = new CodecConversation1();
 		//test.declare();
 		
-		Dave d = new Dave ();
-		d.declare(100, 200);
+//		McdonaldsEmployee m = new McdonaldsEmployee ();
+//		m.declare(000,100);
+		
+//		Dave d = new Dave ();
+//		d.declare(100, 200);
 
 	}
 		

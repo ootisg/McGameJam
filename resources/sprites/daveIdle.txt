@@ -1,0 +1,3 @@
+$src resources/sprites/Dave (Main Character) Idle-sheet.png
+
+ grid 48 83

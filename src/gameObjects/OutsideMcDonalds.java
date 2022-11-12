@@ -11,9 +11,9 @@ public class OutsideMcDonalds extends Level {
 
 	private Backgrounder bg;
 	private Overlayer ol;
-	private Player player;
 	
-	private ArrayList<Rectangle> collision;
+	
+	
 	
 	public OutsideMcDonalds () {
 		collision = new ArrayList<Rectangle> ();
