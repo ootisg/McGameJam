@@ -6,7 +6,7 @@ public class TrashGuy extends TalkableNPC {
 
 	public TrashGuy () {
 		this.setSprite(new Sprite ("resources/sprites/trashGuy.png"));
-		this.conversation = new HappyEmployeeConversation();
+		this.conversation = new TrashGuyConversation();
 		this.setRenderPriority(0);
 	}
 }
