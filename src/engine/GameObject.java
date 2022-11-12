@@ -13,8 +13,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Random;
 
-
+import gameObjects.Fragment;
 import map.Room;
 
 /**
@@ -708,6 +709,73 @@ public abstract class GameObject extends GameAPI {
 	public double getHitboxYOffset(int hitboxNum) {
 		return hitboxYOffset[hitboxNum];
 	}
+	public double getCenterX() {
+		if (hitbox() != null) {
+			return x + hitbox().width/2;
+		} else {
+			return x;
+		}
+	}
+	
+	public double getCenterY() {
+		if (hitbox() != null) {
+			return y + hitbox().height/2;
+		} else {
+			return y;
+		}
+	}
+	public void setCenterY (double val) {
+		yprevious = y;
+		spriteY =  (spriteY + ((val - hitbox().height/2) - y));
+		y = val - hitbox().height/2;
+	}
+	
+	public void setCenterX (double val) {
+		xprevious = x;
+		spriteX =  (spriteX + ((val - hitbox().width/2) - x));
+		x = val - hitbox().width/2;
+	}
+	
+	public void breakToFragments(String fragName) {
+		breakToFragments(fragName,3,10,1,10,0,0);
+	}
+	
+	public void breakToFragments(String fragName, int minFrags, int maxFrags) {	
+		breakToFragments(fragName,minFrags,maxFrags,1,10,0,0);
+	}
+	
+	public void breakToFragments(String fragName, int minFrags, int maxFrags, int minSpeed, int maxSpeed) {
+		
+		breakToFragments(fragName,minFrags,maxFrags,minSpeed,maxSpeed,0,0);
+		
+	}
+	
+	public void breakToFragments(String fragName, int minFrags, int maxFrags, int minSpeed, int maxSpeed, int fragOffsetX, int fragOffsetY) {
+		
+		Random r = new Random ();
+		
+		int fragNum;
+		
+		if (maxFrags == 1) {
+			fragNum = 1;
+		} else {
+			fragNum = r.nextInt(maxFrags-minFrags) + minFrags;
+		}
+		
+		for (int i = 0; i < fragNum; i++) {
+			Fragment frag = new Fragment(fragName);
+			frag.setRenderPriority(this.getRenderPriority());
+			frag.throwObj( r.nextDouble()*2*Math.PI, r.nextInt(maxSpeed - minSpeed) + minSpeed);
+			frag.declare(this.getX() + fragOffsetX,this.getY() + fragOffsetY);
+		}
+		
+	}
+	
+//	public void throwObj (double direction, double speed) {
+//		this.direction = direction;
+//		this.speed = speed;
+//	}
+	
 	/**
 	 * returns all of the hitboxes that this object has that are collding with a specified second object
 	 * @param obj the second object

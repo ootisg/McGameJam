@@ -82,15 +82,17 @@ public class Player extends GameObject {
 					pickups.add (ObjectHandler.getObjectsByName ("Rock"));
 					for (int i = 0; i < pickups.size (); i++) {
 						ArrayList<GameObject> currList = pickups.get (i);
-						for (int j = 0; j < currList.size (); j++) {
-							GameObject curr = currList.get (j);
-							double x1 = getX () + hitbox ().width / 2;
-							double y1 = getY () + hitbox ().height / 2;
-							double x2 = curr.getX () + curr.hitbox ().width / 2;
-							double y2 = curr.getY () + curr.hitbox ().height / 2;
-							if (Math.sqrt ((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)) < 60) {
-								carrying = curr;
-								break;
+						if (currList != null) {
+							for (int j = 0; j < currList.size (); j++) {
+								GameObject curr = currList.get (j);
+								double x1 = getX () + hitbox ().width / 2;
+								double y1 = getY () + hitbox ().height / 2;
+								double x2 = curr.getX () + curr.hitbox ().width / 2;
+								double y2 = curr.getY () + curr.hitbox ().height / 2;
+								if (Math.sqrt ((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)) < 60) {
+									carrying = curr;
+									break;
+								}
 							}
 						}
 						if (carrying != null) {
