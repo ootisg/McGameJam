@@ -27,6 +27,7 @@ public class WinConversation extends CodecConversation{
 		
 		if (t.isEmpty()) {
 			if (conversationState == 3) {
+				GameCode.getSoundPlayer().stopAll();
 				fadeOut = true;
 				Meanwhile m = new Meanwhile();
 				m.declare();

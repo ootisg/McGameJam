@@ -27,6 +27,7 @@ public class McDoubleCrossConversation extends CodecConversation{
 		
 		if (t.isEmpty()) {
 			if (conversationState == 9) {
+				GameCode.getSoundPlayer().stopAll();
 				fadeOut = true;
 			}
 			if (conversationState == 8) {

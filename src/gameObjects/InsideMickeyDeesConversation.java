@@ -27,6 +27,7 @@ public class InsideMickeyDeesConversation extends CodecConversation{
 		
 		if (t.isEmpty()) {
 			if (conversationState == 2) {
+				GameCode.getSoundPlayer().stopAll();
 				fadeOut = true;
 				GameCode.getLevel ().player.whiteList ();
 			}
