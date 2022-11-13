@@ -44,6 +44,7 @@ public class GameCode {
 	}
 
 	public static void init () {
+		s = new SoundPlayer();
 
 //		Level outside = new OutsideMcDonalds ();
 //		currentLevel = outside;
@@ -63,7 +64,7 @@ public class GameCode {
 		//Level outside = new OutsideMcDonalds ();
 		//currentLevel = outside;
 		//outside.load ();
-		s = new SoundPlayer();
+		
 		
 		
 		//CodecConversation1 test = new CodecConversation1();

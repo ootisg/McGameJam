@@ -28,12 +28,8 @@ public class WindysConversation extends CodecConversation{
 			this.changeConverser2Charictar(new Sprite ("resources/sprites/WendysEmpIdle.txt"));
 			converser2.getAnimationHandler().setFlipHorizontal(false);
 			GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/Windys1.wav");
-<<<<<<< HEAD
 			t.changeText("~A200~~Cwhite~IM READY FOR PAYBACK");
 			Room.setView(0,0);	
-=======
-			t.changeText("~A200~~Cwhite~I'M READY FOR PAYBACK!");
->>>>>>> fd58aa9631fa21e10a684f28864011d4bd383ab2
 		}
 		
 		if (t.isEmpty()) {
@@ -41,9 +37,20 @@ public class WindysConversation extends CodecConversation{
 				fadeOut = true;
 				FinalFight f = new FinalFight ();
 				f.declare();
+				conversationState = 9;
 			}
-<<<<<<< HEAD
+				
+			if (conversationState == 7) {
+				t.pushString("~Cwhite~YOU CAN'T FIRE ME! I ONLY WORK FOR THE SIDE OF JUSTICE! YOUR ICE CREAM MACHINE IS NEXT!");
+				t.advanceText();
+				this.setConverser1Sprite(new Sprite ("resources/sprites/daveCodecTalk.txt"));
+				this.setConverser2Sprite(new Sprite ("resources/sprites/WendysEmpIdle.txt")); //TODO
+				GameCode.getSoundPlayer().stopAll();
+				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/Windys7.wav");
+				conversationState = 8;
+			}
 			if (conversationState == 6) {
+				
 				GameCode.drawRoom = false;
 				
 				ArrayList<ArrayList<GameObject>> allObs = ObjectHandler.getChildrenByName("GameObject");
@@ -57,18 +64,6 @@ public class WindysConversation extends CodecConversation{
 					
 				}
 				
-=======
-			if (conversationState == 7) {
->>>>>>> fd58aa9631fa21e10a684f28864011d4bd383ab2
-				t.pushString("~Cwhite~YOU CAN'T FIRE ME! I ONLY WORK FOR THE SIDE OF JUSTICE! YOUR ICE CREAM MACHINE IS NEXT!");
-				t.advanceText();
-				this.setConverser1Sprite(new Sprite ("resources/sprites/daveCodecTalk.txt"));
-				this.setConverser2Sprite(new Sprite ("resources/sprites/WendysEmpIdle.txt")); //TODO
-				GameCode.getSoundPlayer().stopAll();
-				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/Windys7.wav");
-				conversationState = 8;
-			}
-			if (conversationState == 6) {
 				t.pushString("~Cwhite~WAIT, YOU BROKE INTO THE MICKEY DEES DURING YOUR SHIFT!? THAT'S IT, YOU'RE FIRED!");
 				t.advanceText();
 				this.setConverser1Sprite(new Sprite ("resources/sprites/daveCodecIdle.txt"));
