@@ -158,6 +158,7 @@ public class Sprite {
 				File imageFile = new File (imagepath);
 				BufferedImage img = null;
 				try {
+					System.out.println(imageFile);
 					img = ImageIO.read (imageFile);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

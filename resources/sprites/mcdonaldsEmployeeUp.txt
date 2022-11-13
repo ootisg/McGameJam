@@ -1,0 +1,3 @@
+$src resources/sprites/McDonaldsEmployee Up-sheet.png
+
+ grid 18 36

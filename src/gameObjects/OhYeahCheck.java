@@ -3,7 +3,7 @@ package gameObjects;
 import engine.GameCode;
 
 public class OhYeahCheck extends TalkableNPC{
-
+	
 	public OhYeahCheck () {
 		conversation = new KoolAidConversation();
 	}
@@ -15,4 +15,5 @@ public class OhYeahCheck extends TalkableNPC{
 			fadeOut = true;
 		}
 	}
+
 }

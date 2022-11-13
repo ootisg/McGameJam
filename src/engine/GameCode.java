@@ -9,6 +9,7 @@ import gameObjects.Overlayer;
 import gameObjects.Player;
 import gameObjects.CodecConversation1;
 import gameObjects.Dave;
+import gameObjects.InsideMcDonalds;
 import gameObjects.LawnMowerGuy;
 import map.Room;
 
@@ -41,10 +42,18 @@ public class GameCode {
 	}
 
 	public static void init () {
-
-		Level outside = new OutsideMcDonalds ();
-		currentLevel = outside;
-		outside.load ();
+		//Level outside = new InsideMcDonalds ();
+		//currentLevel = outside;
+		//outside.load ();
+		ObjectHandler.addSearchPackage("gameObjects");
+		
+		Room.loadRoom ("resources/mapdata/mcDungeon.tmj");
+	
+		
+		
+		//Level outside = new OutsideMcDonalds ();
+		//currentLevel = outside;
+		//outside.load ();
 		s = new SoundPlayer();
 		
 		
