@@ -40,6 +40,7 @@ public class OutsideMcDonalds extends Level {
 		
 		Entrance entr = new Entrance (coolaidBreakIn);
 		entr.declare (254, 45);
+		entr.hide();
 		entr.setHitboxAttributes (87, 37);
 		
 		guy.declare(690, 505);
@@ -48,6 +49,10 @@ public class OutsideMcDonalds extends Level {
 		trash.declare(180, 220);
 		smoke.declare(400, 20);
 		wind.declare(560, 76);
+		
+		check.setEntrince(entr);
+		
+		entr.blackList();
 		
 		collision.add (new Rectangle (207, 82, 494, 291));
 		collision.add (new Rectangle (0, 191, 69, 128));
