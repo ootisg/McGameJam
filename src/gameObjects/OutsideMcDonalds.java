@@ -50,7 +50,7 @@ public class OutsideMcDonalds extends Level {
 		smoke.declare(400, 20);
 		wind.declare(560, 76);
 		
-		check.setEntrince(entr);
+//		check.setEntrince(entr);
 		
 		entr.blackList();
 		
