@@ -1,5 +1,6 @@
 package gameObjects;
 
+import engine.GameCode;
 import engine.Sprite;
 
 public class TrashConversation extends CodecConversation{
@@ -22,6 +23,7 @@ public class TrashConversation extends CodecConversation{
 			this.changeConverser2Charictar(new Sprite ("resources/sprites/trashCodecIdle.txt"));
 			converser2.getAnimationHandler().setFlipHorizontal(false);
 			t.changeText("~P50~~Cwhite~HEY, WHAT ARE YOU DOING STANDING OUT HERE?");
+			GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/TrashCodec1.wav");
 		}
 		
 		if (t.isEmpty()) {
@@ -34,13 +36,17 @@ public class TrashConversation extends CodecConversation{
 				this.setConverser1Sprite(new Sprite ("resources/sprites/daveCodecTalk.txt"));
 				this.setConverser2Sprite(new Sprite ("resources/sprites/trashCodecIdle.txt"));
 				conversationState = 3;
+				GameCode.getSoundPlayer().stopAll();
+				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/TrashCodec3.wav");
 			}
 			if (conversationState == 1) {
-				t.pushString("~Cwhite~I JUST TOOK OUT THE TRASH TO THE TRASHBIN. I HOPE THOSE DUMPSTER DIVERS DON'T TAKE THE TRASH OUT OF THE BIN.");
+				t.pushString("~Cwhite~I JUST TOOK THE TRASH OUT TO THE TRASHCAN. I REALLY HOPE THOSE DUMPSTER DIVERS DON'T TAKE IT OUT LIKE THE USUALLY DO.");
 				t.advanceText();
 				this.setConverser1Sprite(new Sprite ("resources/sprites/daveCodecIdle.txt"));
 				this.setConverser2Sprite(new Sprite ("resources/sprites/trashCodecTalk.txt"));
 				conversationState = 2;
+				GameCode.getSoundPlayer().stopAll();
+				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/TrashCodec2.wav");
 			}
 		}
 	}

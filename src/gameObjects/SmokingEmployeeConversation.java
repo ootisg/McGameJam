@@ -33,7 +33,7 @@ public class SmokingEmployeeConversation extends CodecConversation{
 			}
 			
 			if (conversationState == 3) {
-				t.pushString("~Cwhite~DAMN, SHE'S GOT SASS. MAYBE I SHOULD TELL HER BOSS.");
+				t.pushString("~Cwhite~DAMN, SHE'S GOT SASS. MAYBE I SHOULD GO TELL HER BOSS.");
 				t.advanceText();
 				this.setConverser1Sprite(new Sprite ("resources/sprites/daveCodecTalk.txt"));
 				this.setConverser2Sprite(new Sprite ("resources/sprites/smokingCodecIdle.txt"));

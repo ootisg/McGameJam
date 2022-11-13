@@ -69,7 +69,7 @@ public class Player extends GameObject {
 			setX (xprev);
 			setY (yprev);
 		}
-		if (keyPressed(KeyEvent.VK_ENTER)) {
+		if (keyPressed(KeyEvent.VK_SHIFT)) {
 			if (carrying == null) {
 				if (isColliding ("RockSource") && !((RockSource)this.getCollisionInfo ().getCollidingObjects ().get (0)).sourceEmpty ()) {
 					RockSource rs = (RockSource)this.getCollisionInfo ().getCollidingObjects ().get (0);

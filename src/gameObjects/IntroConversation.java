@@ -18,39 +18,53 @@ public class IntroConversation extends CodecConversation {
 		
 		if (conversationState == 0) {
 			conversationState = 1;
-			this.changeConverser1Charictar(new Sprite ("resources/sprites/wendysEmpIdle.txt"));
+			this.changeConverser1Charictar(new Sprite ("resources/sprites/daveCodecIdle.txt"));
 			this.changeConverser2Charictar(new Sprite ("resources/sprites/wendysEmpTalk.txt"));
 			converser2.getAnimationHandler().setFlipHorizontal(false);
-			t.changeText("~A300~~Cwhite~DING, FRIES ARE DONE. DING, FRIES ARE DONE. DING, FRIES ARE DONE. DING, FRIES ARE DONE.");
-			GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/ding_fries_are_done.wav");
+			t.changeText("~A300~~Cwhite~OK JIMMY, HERE'S THE SITREP.");
+			GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/IntroCodec1.wav");
 			
 		}
 		
 		if (t.isEmpty()) {
+			if (conversationState == 6) {
+				fadeOut = true;
+			}
+			if (conversationState == 5) {
+				t.pushString("~Cwhite~GOOD LUCK ON YOUR MISSION!");
+				t.advanceText();
+				GameCode.getSoundPlayer().stopAll();
+				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/IntroCodec6.wav");
+				conversationState = 6;
+			}
 			
 			if (conversationState == 4) {
-				fadeOut = true;
+				t.pushString("~Cwhite~MAKE SURE YOU DON'T GET CAUGHT BY ANYONE INSIDE THE MICKEY DEES.");
+				t.advanceText();
+				GameCode.getSoundPlayer().stopAll();
+				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/IntroCodec5.wav");
+				conversationState = 5;
 			}
 		
 			if (conversationState == 3) {
-				t.pushString("~P32~~Cwhite~WOULD YOU LIKE AN APPLE PIE WITH THAT?~A1000~  WOULD YOU LIKE AN APPLE PIE WITH THAT?");
+				t.pushString("~P35~~Cwhite~YOUR OBJECTIVE WILL BE TO INFILTRATE THE MICKEY DEES AND JAM THE ICE CREAM MACHINE.");
 				t.advanceText();
 				GameCode.getSoundPlayer().stopAll();
-				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/apple pie.wav");
+				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/IntroCodec4.wav");
 				conversationState = 4;
 			}
 			
 			if (conversationState == 2) {
-				t.pushString("~Cwhite~I WORK AT MCDEES MAKING FLAME BOILED BIG MACS.  I WEAR PAPER HATS.");
+				t.pushString("~P50~~Cwhite~THIS OPERATION IS ENTIRELY CONFIDENTIAL.");
 				GameCode.getSoundPlayer().stopAll();
-				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/I work at mcdees.wav");
+				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/IntroCodec3.wav");
 				t.advanceText();
 				conversationState = 3;
 			}
 			if (conversationState == 1) {
-				t.pushString("~Cwhite~I GOTTA RUN, I GOTTA RUN, I GOTTA RUN, I GOTTA RUN.");
+				t.pushString("~P25~~Cwhite~SINCE YOU AND I ARE THE ONLY WINDY'S EMPLOYEES LEFT AFTER ALL OF OUR CUSTOMERS AND COWORKERS STARTED WORKING FOR MICKEY DEES...");
 				GameCode.getSoundPlayer().stopAll();
-				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/I gotta run.wav");
+				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/IntroCodec2.wav");
 				t.advanceText();
 				conversationState = 2;
 			}
@@ -63,8 +77,6 @@ public class IntroConversation extends CodecConversation {
 		conversationState = 0;
 		conversationTimer = 0;
 	}
-
-}
 
 }
 

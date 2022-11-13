@@ -1,3 +1,3 @@
-$src resources/sprites/peterCodec.png
+$src resources/sprites/WendysManager-codec-sheet.png
 
- rectangle 0 0 250 218
+grid 250 292
