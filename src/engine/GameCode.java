@@ -42,9 +42,15 @@ public class GameCode {
 	}
 
 	public static void init () {
+<<<<<<< HEAD
 		//Level outside = new OutsideMcDonalds ();
 		//currentLevel = outside;
 		//outside.load ();
+=======
+		Level outside = new InsideMcDonalds ();
+		currentLevel = outside;
+		outside.load ();
+>>>>>>> b15d33b3c87a87217fb4133f06e1092a1919d443
 		ObjectHandler.addSearchPackage("gameObjects");
 		
 		Room.loadRoom ("resources/mapdata/mcDungeon.tmj");

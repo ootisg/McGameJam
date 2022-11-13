@@ -81,12 +81,14 @@ public class Player2D extends GameObject {
 		} else {
 			if (onBlueSlide) {
 				if (!this.goX(this.getX() - 4)){
+					useSpriteHitbox();
 					onBlueSlide = false;
 				} else {
 					Room.setView(Room.getViewXAcurate() - 4,Room.getViewYAcurate());
 				}
 				
 				if (!this.goY(this.getY() + 3)) {
+					useSpriteHitbox();
 					onBlueSlide = false;
 				} else {
 					Room.setView(Room.getViewXAcurate(),Room.getViewYAcurate() + 3);
@@ -95,20 +97,21 @@ public class Player2D extends GameObject {
 			} else if (onRedSlide) {
 				
 				if (!this.goX(this.getX() + 6)){
-					
+					useSpriteHitbox();
 					onRedSlide = false;
 				} else {
 					Room.setView(Room.getViewXAcurate() + 6,Room.getViewYAcurate());
 				}
 				
 				if (!this.goY(this.getY() + 2)) {
-				
+					useSpriteHitbox();
 					onRedSlide = false;
 				} else {
 					Room.setView(Room.getViewXAcurate(),Room.getViewYAcurate() + 2);
 				}
 			} else {
 				if (!this.goX(this.getX() + 12)){
+					useSpriteHitbox();
 					onGreenSlide = false;
 				} else {
 					Room.setView(Room.getViewXAcurate() + 12,Room.getViewYAcurate());

@@ -20,6 +20,7 @@ public class McdonaldsEmployee extends GameObject {
 	public static final Sprite upSprite = new Sprite ("resources/sprites/mcdonaldsEmployeeUp.txt");
 	public static final Sprite downSprite = new Sprite ("resources/sprites/mcdonaldsEmployeeDown.txt");
 	public static final Sprite leftSprite = new Sprite ("resources/sprites/mcdonaldsEmployeeLeft.txt");
+	public static final Sprite idleSprite = new Sprite ("resources/sprites/mcdonaldsEmployeeIdle.txt");
 	
 	public static final V2 upVec = new V2 (0, -1);
 	public static final V2 downVec = new V2 (0, 1);

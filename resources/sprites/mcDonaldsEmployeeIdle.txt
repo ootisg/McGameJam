@@ -1,0 +1,3 @@
+$src resources/sprites/McDonaldsEmployee Idle-sheet.png
+
+ grid 26 74

@@ -18,7 +18,10 @@ public class BlueSlide extends GameObject {
 			coliding = true;
 			Player2D player = (Player2D)this.getCollisionInfo().getCollidingObjects().get(0);
 			if (!player.onBlueSlide) {
+				player.dontUseSpriteHitbox();
 				player.onBlueSlide = true;
+				player.setSprite(new Sprite ("resources/sprites/daveSlide.txt"));
+				player.getAnimationHandler().setFrameTime(100);
 			}
 		}
 		
