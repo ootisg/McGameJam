@@ -19,7 +19,7 @@ public class Employee2D1 extends McdonaldsEmployee {
 	
 	public Employee2D1 () {
 		b = new SpriteBitch ();
-		this.setSprite(leftSprite);
+		this.setSprite(new Sprite ("resources/sprites/baby.txt"));
 		this.radiusX = 200;
 	}
 	
@@ -70,7 +70,7 @@ public class Employee2D1 extends McdonaldsEmployee {
 					if (contender1 > contender2) {
 						
 						//ColidableVector toPixel = new ColidableVector (new Point ((int)this.getX(),(int)this.getY()), new Point (i,j)); 
-						if (!collide (pos, offs2, new Rectangle ((int)this.getX() + 40, (int)this.getY() - 30, 100, 5)) && !collide (pos, offs2, new Rectangle ((int)this.getX() + 40, (int)this.getY() + 50, 100, 5)) ) {
+						if (!collide (pos, offs2, new Rectangle ((int)this.getX() + 40, (int)this.getY() - 46, 100, 5)) && !collide (pos, offs2, new Rectangle ((int)this.getX() + 40, (int)this.getY() + 50, 100, 5)) ) {
 							g.fillRect(i - Room.getViewX(),j - Room.getViewY(),4,4);
 						}
 						
