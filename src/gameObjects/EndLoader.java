@@ -15,6 +15,7 @@ public class EndLoader extends TalkableNPC {
 	public void frameEvent () {
 		if (this.isColliding("Player2D")) {
 			if (!this.getCollisionInfo().getCollidingObjects().get(0).isBlackListed()) {
+				GameCode.getSoundPlayer().stop();
 				this.getCollisionInfo().getCollidingObjects().get(0).blackList();
 				fadeOut = true;
 				

@@ -1,0 +1,3 @@
+$src resources/sprites/peterFriendCodac.png
+
+ grid 250 218

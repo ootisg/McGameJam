@@ -28,15 +28,19 @@ public class WinConversation extends CodecConversation{
 		if (t.isEmpty()) {
 			if (conversationState == 3) {
 				fadeOut = true;
+				Meanwhile m = new Meanwhile();
+				m.declare();
 			}
 
 			if (conversationState == 2) {
+				GameCode.getSoundPlayer().stop();
 				t.pushString("~Cwhite~I HAVE A FAMILY OF FOUR, YOU DICK! HOW CAN I SUPPLY FOR THEM NOW!?");
 				t.advanceText();
 				this.setConverser1Sprite(new Sprite ("resources/sprites/daveCodecIdle.txt"));
 				this.setConverser2Sprite(new Sprite ("resources/sprites/WendysEmpTalk.txt"));
 				GameCode.getSoundPlayer().stopAll();
 				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/Win3.wav");
+				
 				conversationState = 3;
 			}
 			if (conversationState == 1) {

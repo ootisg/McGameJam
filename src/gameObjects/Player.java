@@ -8,6 +8,7 @@ import engine.GameCode;
 import engine.GameObject;
 import engine.ObjectHandler;
 import engine.Sprite;
+import map.Room;
 
 public class Player extends GameObject {
 	
@@ -134,8 +135,17 @@ public class Player extends GameObject {
 	}
 	
 	public void die () {
-		GameCode.getLevel ().unload ();
-		GameCode.getLevel ().load ();
+		this.blackList();
+		this.hide();
+		
+		this.setX(0);
+		this.setY(0);
+		
+		
+		LevelTwoGameOverScreen screen = new LevelTwoGameOverScreen();
+		screen.playMcdonaldsJingle();
+		
+		screen.declare();
 	}
 
 	@Override

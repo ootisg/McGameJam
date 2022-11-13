@@ -20,6 +20,8 @@ public class OutsideMcDonalds extends Level {
 	Window wind = new Window ();
 	OhYeahCheck check = new OhYeahCheck ();
 	
+	PeterFreind freind = new PeterFreind ();
+	
 	public static final Sprite coolaidBreakIn = new Sprite ("resources/bg/coolaidman_breakin.png");
 	
 	static Entrance entr = new Entrance (coolaidBreakIn);
@@ -49,6 +51,7 @@ public class OutsideMcDonalds extends Level {
 		guy.declare(690, 505);
 		guy2.declare(500,375);
 		speaker.declare();
+		freind.declare(720, 0);
 		trash.declare(180, 220);
 		smoke.declare(400, 20);
 		wind.declare(560, 76);

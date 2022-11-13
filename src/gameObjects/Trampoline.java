@@ -1,5 +1,6 @@
 package gameObjects;
 
+import engine.GameCode;
 import engine.GameObject;
 import engine.Sprite;
 
@@ -16,6 +17,7 @@ public class Trampoline extends GameObject {
 			Player2D player = (Player2D) this.getCollisionInfo().getCollidingObjects().get(0);
 			
 			if (player.vy > 0) {
+				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/boing.wav");
 				player.vy = player.vy * -1;
 			}
 		}

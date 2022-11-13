@@ -28,6 +28,9 @@ public class McDungeonConversation extends CodecConversation{
 		if (t.isEmpty()) {
 			if (conversationState == 5) {
 				fadeOut = true;
+				GameCode.getSoundPlayer().play("resources/sound/McDungeon.wav", 6F);
+				GameCode.drawRoom = true;
+				conversationState = 6;
 			}
 			if (conversationState == 4) {
 				t.pushString("~Cwhite~OH, I'VE GOT IT! I CAN CRAWL THROUGH THESE HOLES. THIS WILL GET ME OUT OF HERE!");

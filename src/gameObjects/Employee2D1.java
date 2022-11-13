@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import engine.GameCode;
 import engine.GameObject;
+import engine.ObjectHandler;
 import engine.RenderLoop;
 import engine.Sprite;
 import engine.V2;
@@ -17,16 +18,21 @@ public class Employee2D1 extends McdonaldsEmployee {
 	
 	SpriteBitch b;
 	
+	Player2D player;
+	
 	public Employee2D1 () {
 		b = new SpriteBitch ();
 		this.setSprite(new Sprite ("resources/sprites/baby.txt"));
 		b.getAnimationHandler().setFrameTime(100);
 		this.radiusX = 200;
+		
 	}
 	
 	@Override
 	public void frameEvent () {
-
+		if (player == null) {
+			player = (Player2D)ObjectHandler.getObjectsByName("Player2D").get(0);
+		}
 	}
 	
 	@Override
@@ -71,14 +77,19 @@ public class Employee2D1 extends McdonaldsEmployee {
 					if (contender1 > contender2) {
 						
 						//ColidableVector toPixel = new ColidableVector (new Point ((int)this.getX(),(int)this.getY()), new Point (i,j)); 
-						if (!collide (pos, offs2, new Rectangle ((int)this.getX() + 40, (int)this.getY() - 46, 100, 5)) && !collide (pos, offs2, new Rectangle ((int)this.getX() + 40, (int)this.getY() + 50, 100, 5)) ) {
+						if (!collide (pos, offs2, new Rectangle ((int)this.getX() + 40, (int)this.getY() - 40, 180, 5)) && !collide (pos, offs2, new Rectangle ((int)this.getX() + 40, (int)this.getY() + 50, 100, 5)) ) {
 							g.fillRect(i - Room.getViewX(),j - Room.getViewY(),4,4);
+							//looked at
+							try {
+								if (collide (pos, offs2, player.hitbox())) {
+									player.die();
+								}
+							} catch (NullPointerException e) {
+								
+							}
 						}
 						
-						//looked at
-						/*if (toPixel.isColliding(GameCode.getLevel().player)) {
-							GameCode.getLevel().player.die();
-						}*/
+						
 					}
 				}
 			}
