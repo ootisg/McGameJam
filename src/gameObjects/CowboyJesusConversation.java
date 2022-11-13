@@ -19,7 +19,7 @@ public class CowboyJesusConversation extends CodecConversation{
 		
 		if (conversationState == 0) {
 			conversationState = 1;
-			this.changeConverser1Charictar(new Sprite ("resources/sprites/daveCodecTalk.txt"));
+			this.changeConverser1Charictar(new Sprite ("resources/sprites/daveCodecIdle.txt"));
 			this.changeConverser2Charictar(new Sprite ("resources/sprites/CowboyJesus.txt"));
 			converser2.getAnimationHandler().setFlipHorizontal(false);
 			t.changeText("~P50~~Cwhite~ALRIGHT SONNY, I'LL HELP YOU OUT. TIME TO SADDLE UP.");
@@ -29,6 +29,7 @@ public class CowboyJesusConversation extends CodecConversation{
 		if (t.isEmpty()) {
 			if (conversationState == 2) {
 				fadeOut = true;
+				GameCode.getLevel ().player.whiteList ();
 			}
 			if (conversationState == 1) {
 				t.pushString("~Cwhite~WHO THE HELL ARE YOU?");

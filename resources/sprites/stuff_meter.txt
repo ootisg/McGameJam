@@ -1,0 +1,4 @@
+$src resources/sprites/stuff_meter.png
+
+ grid 128 32
+

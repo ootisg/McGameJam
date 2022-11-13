@@ -29,6 +29,7 @@ public class TrashConversation2 extends CodecConversation{
 		
 		if (t.isEmpty()) {
 			if (conversationState == 1) {
+				GameCode.getSoundPlayer().stopAll();
 				fadeOut = true;
 			}
 		}

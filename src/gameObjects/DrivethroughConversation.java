@@ -30,6 +30,7 @@ public class DrivethroughConversation extends CodecConversation{
 		if (t.isEmpty()) {
 			
 			if (conversationState == 4) {
+				GameCode.getSoundPlayer().stopAll();
 				fadeOut = true;
 			}
 		

@@ -27,6 +27,7 @@ public class McDaleRevealConversation extends CodecConversation{
 		
 		if (t.isEmpty()) {
 			if (conversationState == 7) {
+				GameCode.getSoundPlayer().stopAll();
 				fadeOut = true;
 			}
 			if (conversationState == 6) {

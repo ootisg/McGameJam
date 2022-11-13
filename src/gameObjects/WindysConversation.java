@@ -34,12 +34,12 @@ public class WindysConversation extends CodecConversation{
 		
 		if (t.isEmpty()) {
 			if (conversationState == 8) {
+				GameCode.getSoundPlayer().stopAll();
 				fadeOut = true;
 				FinalFight f = new FinalFight ();
 				f.declare();
 				conversationState = 9;
 			}
-				
 			if (conversationState == 7) {
 				t.pushString("~Cwhite~YOU CAN'T FIRE ME! I ONLY WORK FOR THE SIDE OF JUSTICE! YOUR ICE CREAM MACHINE IS NEXT!");
 				t.advanceText();
@@ -50,20 +50,6 @@ public class WindysConversation extends CodecConversation{
 				conversationState = 8;
 			}
 			if (conversationState == 6) {
-				
-				GameCode.drawRoom = false;
-				
-				ArrayList<ArrayList<GameObject>> allObs = ObjectHandler.getChildrenByName("GameObject");
-				
-				for (int i = 0; i < allObs.size(); i++) {
-					for (int j = 0; j <allObs.get(i).size(); j++) {
-						if (!allObs.get(i).get(j).equals(this)) {
-							allObs.get(i).get(j).forget();
-						}
-					}
-					
-				}
-				
 				t.pushString("~Cwhite~WAIT, YOU BROKE INTO THE MICKEY DEES DURING YOUR SHIFT!? THAT'S IT, YOU'RE FIRED!");
 				t.advanceText();
 				this.setConverser1Sprite(new Sprite ("resources/sprites/daveCodecIdle.txt"));
@@ -81,7 +67,6 @@ public class WindysConversation extends CodecConversation{
 				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/Windys8.wav");
 				conversationState = 6;
 			}
-			
 			if (conversationState == 4) {
 				t.pushString("~P30~~Cwhite~SNEAKING INTO THE MICKEY DEES AND JAMMING THE ICE CREAM MACHINE UNDER YOUR LIEGE, DUH."); //TODO: Reread the line
 				t.advanceText();

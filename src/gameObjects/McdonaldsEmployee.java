@@ -11,6 +11,7 @@ import java.util.ListIterator;
 import engine.ColidableVector;
 import engine.GameCode;
 import engine.GameObject;
+import engine.ObjectHandler;
 import engine.RenderLoop;
 import engine.Sprite;
 import engine.V2;
@@ -123,12 +124,13 @@ public class McdonaldsEmployee extends GameObject {
 	public void draw() {
 		super.draw();
 		Graphics g = RenderLoop.wind.getBufferGraphics();
-		g.setColor(new Color (230,225,108,55));
+		g.setColor(new Color (230,225,108,100));
 		V2 pos = new V2 ((float)getX (), (float)getY ());
 		
 		LevelWall l = new LevelWall ();
-		for (int i = align ((int)this.getX() - radiusX, 4); i < align ((int)this.getX() + radiusY, 4); i = i + 4) {
-			for (int j = align ((int)this.getY() - radiusX, 4); j < align ((int)this.getY() + radiusY, 4); j = j + 4) {
+		int blockSize = 8;
+		for (int i = align ((int)this.getX() - radiusX, blockSize); i < align ((int)this.getX() + radiusY, blockSize); i = i + blockSize) {
+			for (int j = align ((int)this.getY() - radiusX, blockSize); j < align ((int)this.getY() + radiusY, blockSize); j = j + blockSize) {
 				
 				double xOffs = i - this.getX();
 				double yOffs = j - this.getY();
@@ -148,7 +150,7 @@ public class McdonaldsEmployee extends GameObject {
 						
 						//ColidableVector toPixel = new ColidableVector (new Point ((int)this.getX(),(int)this.getY()), new Point (i,j)); 
 						
-						ArrayList <Rectangle> walls = GameCode.getLevel().collision;
+						ArrayList <Rectangle> walls = GameCode.getLevel().lightBlockers;
 						boolean hitWall = false;
 						
 						for (int k = 0; k < walls.size(); k++) {
@@ -161,140 +163,165 @@ public class McdonaldsEmployee extends GameObject {
 						
 						//looked at
 						if (!hitWall) {
-						g.fillRect(i,j,4,4);
+						g.fillRect(i,j,blockSize,blockSize);
 						}
-						/*if (toPixel.isColliding(GameCode.getLevel().player)) {
+						/*if (GameCode.getLevel().player.hitbox () != null && contender1 < 1 && collide (pos, offs2, GameCode.getLevel().player.hitbox ())) {
+							System.out.println (this);
+							System.out.println (getX () + ", " + getY ());
+							System.out.println (GameCode.getLevel ().player.hitbox ().x + ", " + GameCode.getLevel ().player.hitbox ().y);
+							System.out.println (xOffs + ", " + yOffs);
+							System.out.println (xOffs * xOffs + yOffs * yOffs);
+							System.out.println (radiusX * radiusX);
+							System.out.println (i + ", " + j);
 							GameCode.getLevel().player.die();
 						}*/
 					}
 				}
 			}
-			
-			
-			
+			ArrayList <Rectangle> walls = GameCode.getLevel().lightBlockers;
+			boolean hitWall = false;
+			V2 lookFrom = new V2 ((int)this.getX (), (int)this.getY ());
+			V2 lookTo = new V2 ((int)(GameCode.getLevel ().player.getCenterX ()), (int)(GameCode.getLevel ().player.getCenterY ()));
+			V2 lookVec = lookFrom.diff (lookTo);
+			double len = lookVec.len ();
+			lookVec.normalize ();
+			if (len < radiusX) {
+				if (lookVec.dot (faceVector) > Math.cos (Math.toRadians (fov))) {
+					for (int k = 0; k < walls.size(); k++) {
+						Rectangle r = new Rectangle (walls.get(k).x, walls.get(k).y, walls.get(k).width, walls.get(k).height);
+						if (collide (lookFrom, lookTo, r)) {
+							hitWall = true;
+						}
+					}
+					if (hitWall == false) {
+						GameCode.getLevel ().player.die ();
+					}
+				}
+			}
 		}
 	}
 	
 	@Override
 	public void frameEvent () {
-		if (pauseCounter <= 0) {
-			if (pathIter == null) {
-				pathIter = path.listIterator ();
-			}
-			if (fromPt == null) {
-				fromPt = pathIter.next ();
-				toPt = pathIter.next ();
-			}
-			double xDiff = getX () - toPt.x;
-			double yDiff = getY () - toPt.y;
-			double dist = Math.hypot (xDiff, yDiff);
-			ang = Math.atan2 (xDiff, yDiff);
-			if (dist < 5) {
-				if (aiType == 0) {
-					if (direction == false) {
+		if (!ObjectHandler.getObjectsByName ("Player").get (0).isBlackListed ()) {
+			if (pauseCounter <= 0) {
+				if (pathIter == null) {
+					pathIter = path.listIterator ();
+				}
+				if (fromPt == null) {
+					fromPt = pathIter.next ();
+					toPt = pathIter.next ();
+				}
+				double xDiff = getX () - toPt.x;
+				double yDiff = getY () - toPt.y;
+				double dist = Math.hypot (xDiff, yDiff);
+				ang = Math.atan2 (xDiff, yDiff);
+				if (dist < 5) {
+					if (aiType == 0) {
+						if (direction == false) {
+							fromPt = toPt;
+							setX (fromPt.x);
+							setY (fromPt.y);
+							pauseCounter = fromPt.pauseTime;
+							if (pathIter.hasNext ()) {
+								toPt = pathIter.next ();
+								//turning = true;
+							} else {
+								direction = true;
+								pathIter.previous ();
+								toPt = pathIter.previous ();
+								//turning = true;
+							}
+						} else {
+							fromPt = toPt;
+							setX (fromPt.x);
+							setY (fromPt.y);
+							pauseCounter = fromPt.pauseTime;
+							if (pathIter.hasPrevious ()) {
+								toPt = pathIter.previous ();
+								//turning = true;
+							} else {
+								direction = false;
+								pathIter.next ();
+								toPt = pathIter.next ();
+								//turning = true;
+							}
+						}
+					} else {
 						fromPt = toPt;
 						setX (fromPt.x);
 						setY (fromPt.y);
 						pauseCounter = fromPt.pauseTime;
 						if (pathIter.hasNext ()) {
 							toPt = pathIter.next ();
-							//turning = true;
 						} else {
-							direction = true;
-							pathIter.previous ();
-							toPt = pathIter.previous ();
-							//turning = true;
-						}
-					} else {
-						fromPt = toPt;
-						setX (fromPt.x);
-						setY (fromPt.y);
-						pauseCounter = fromPt.pauseTime;
-						if (pathIter.hasPrevious ()) {
-							toPt = pathIter.previous ();
-							//turning = true;
-						} else {
-							direction = false;
-							pathIter.next ();
+							pathIter = path.listIterator ();
 							toPt = pathIter.next ();
-							//turning = true;
 						}
 					}
-				} else {
-					fromPt = toPt;
-					setX (fromPt.x);
-					setY (fromPt.y);
-					pauseCounter = fromPt.pauseTime;
-					if (pathIter.hasNext ()) {
-						toPt = pathIter.next ();
-					} else {
-						pathIter = path.listIterator ();
-						toPt = pathIter.next ();
+				}
+				V2 offs = new V2 ((float)(toPt.x - getX ()), (float)(toPt.y - getY ()));
+				offs.normalize ();
+				float spd = 1;
+				setX (getX () + faceVector.x * spd);
+				setY (getY () + faceVector.y * spd);
+				int dir = -1;
+				double largest = -1;
+				double[] dots = new double[4];
+				dots[0] = faceVector.dot (upVec);
+				dots[1] = faceVector.dot (leftVec);
+				dots[2] = faceVector.dot (downVec);
+				dots[3] = faceVector.dot (rightVec);
+	 			for (int i = 0; i < 4; i++) {
+					if (dots[i] > largest) {
+						largest = dots[i];
+						dir = i;
 					}
 				}
-				System.out.println (fromPt + "," + toPt);
-			}
-			V2 offs = new V2 ((float)(toPt.x - getX ()), (float)(toPt.y - getY ()));
-			offs.normalize ();
-			float spd = 1;
-			setX (getX () + faceVector.x * spd);
-			setY (getY () + faceVector.y * spd);
-			int dir = -1;
-			double largest = -1;
-			double[] dots = new double[4];
-			dots[0] = faceVector.dot (upVec);
-			dots[1] = faceVector.dot (leftVec);
-			dots[2] = faceVector.dot (downVec);
-			dots[3] = faceVector.dot (rightVec);
- 			for (int i = 0; i < 4; i++) {
-				if (dots[i] > largest) {
-					largest = dots[i];
-					dir = i;
+	 			if (getAnimationHandler ().getFrameTime () == 0) {
+	 				getAnimationHandler ().setFrameTime (100);
+	 			}
+	 			if (currDir != dir) {
+	 				switch (dir) {
+	 					case 0:
+	 						setSprite (upSprite);
+	 						this.getAnimationHandler ().setFlipHorizontal (false);
+	 						break;
+	 					case 1:
+	 						setSprite (leftSprite);
+	 						this.getAnimationHandler ().setFlipHorizontal (true);
+	 						break;
+	 					case 2:
+	 						setSprite (downSprite);
+	 						this.getAnimationHandler ().setFlipHorizontal (false);
+	 						break;
+	 					case 3:
+	 						setSprite (leftSprite);
+	 						this.getAnimationHandler ().setFlipHorizontal (false);
+	 						break;
+	 				}
+	 			}
+				if (!turning && pauseCounter <= 0) {
+					faceVector = offs;
 				}
-			}
- 			if (getAnimationHandler ().getFrameTime () == 0) {
- 				getAnimationHandler ().setFrameTime (100);
- 			}
- 			if (currDir != dir) {
- 				switch (dir) {
- 					case 0:
- 						setSprite (upSprite);
- 						this.getAnimationHandler ().setFlipHorizontal (false);
- 						break;
- 					case 1:
- 						setSprite (leftSprite);
- 						this.getAnimationHandler ().setFlipHorizontal (true);
- 						break;
- 					case 2:
- 						setSprite (downSprite);
- 						this.getAnimationHandler ().setFlipHorizontal (false);
- 						break;
- 					case 3:
- 						setSprite (leftSprite);
- 						this.getAnimationHandler ().setFlipHorizontal (false);
- 						break;
- 				}
- 			}
-			if (!turning && pauseCounter <= 0) {
-				faceVector = offs;
-			}
-		} else {
-			pauseCounter -= 1;
-			if (pauseCounter < 0) {
-				pauseCounter = 0;
-			}
-			getAnimationHandler ().setAnimationFrame (0);
-			getAnimationHandler ().setFrameTime (0);
-			/*double currAng = Math.atan2 (faceVector.x, faceVector.y);
-			V2 offs = new V2 ((float)(toPt.x - getX ()), (float)(toPt.y - getY ()));
-			double toAng = Math.atan2 (offs.x, offs.y);
-			System.out.println (Math.abs (currAng - toAng));
-			if (Math.abs (currAng - toAng) < Math.PI / 90) {
-				turning = false;
 			} else {
-				ang += currAng - toAng < 0 ? (-Math.PI / 360) : (Math.PI / 360);
-				faceVector = new V2 ((float)Math.cos (ang), (float)Math.sin (ang));
-			}*/
+				pauseCounter -= 1;
+				if (pauseCounter < 0) {
+					pauseCounter = 0;
+				}
+				getAnimationHandler ().setAnimationFrame (0);
+				getAnimationHandler ().setFrameTime (0);
+				/*double currAng = Math.atan2 (faceVector.x, faceVector.y);
+				V2 offs = new V2 ((float)(toPt.x - getX ()), (float)(toPt.y - getY ()));
+				double toAng = Math.atan2 (offs.x, offs.y);
+				System.out.println (Math.abs (currAng - toAng));
+				if (Math.abs (currAng - toAng) < Math.PI / 90) {
+					turning = false;
+				} else {
+					ang += currAng - toAng < 0 ? (-Math.PI / 360) : (Math.PI / 360);
+					faceVector = new V2 ((float)Math.cos (ang), (float)Math.sin (ang));
+				}*/
+			}
 		}
 	}
 	

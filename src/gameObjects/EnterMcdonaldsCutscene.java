@@ -1,5 +1,8 @@
 package gameObjects;
 
+import engine.GameCode;
+import engine.ObjectHandler;
+
 public class EnterMcdonaldsCutscene extends TalkableNPC {
 
 	public EnterMcdonaldsCutscene () {
@@ -9,6 +12,7 @@ public class EnterMcdonaldsCutscene extends TalkableNPC {
 	
 	@Override
 	public void frameEvent () {
+		GameCode.getLevel ().player.blackList ();
 		if (talking) {
 			this.forget();
 			return;

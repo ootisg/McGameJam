@@ -10,13 +10,12 @@ public class InsideMickeyDeesConversation extends CodecConversation{
 
 	
 	public InsideMickeyDeesConversation () {
-	
+		
 	}
 	
 	@Override
 	public void frameEvent () {
 		super.frameEvent();
-		
 		if (conversationState == 0) {
 			conversationState = 1;
 			this.changeConverser1Charictar(new Sprite ("resources/sprites/daveCodecTalk.txt"));
@@ -28,7 +27,9 @@ public class InsideMickeyDeesConversation extends CodecConversation{
 		
 		if (t.isEmpty()) {
 			if (conversationState == 2) {
+				GameCode.getSoundPlayer().stopAll();
 				fadeOut = true;
+				GameCode.getLevel ().player.whiteList ();
 			}
 			if (conversationState == 1) {
 				t.pushString("~Cwhite~~P20~OKAY, YOUR NEXT STEP IS TO FIND ITEMS THAT WILL ALLOW YOU TO JAM THE MACHINE. LOOK AROUND FOR ANYTHING THAT WILL HELP.");
