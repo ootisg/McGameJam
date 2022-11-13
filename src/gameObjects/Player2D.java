@@ -21,6 +21,7 @@ public class Player2D extends GameObject {
 	
 	public boolean onGreenSlide = false;
 	
+
 	public static final Sprite WALK = new Sprite ("resources/sprites/daveWalkSide.txt");
 	public static final Sprite IDLE = new Sprite ("resources/sprites/daveIdle.txt");
 	
@@ -39,6 +40,8 @@ public class Player2D extends GameObject {
 	@Override
 	public void frameEvent () {
 	
+		
+		
 		
 		if (!onBlueSlide && !onRedSlide && !onGreenSlide) {
 			if (keyDown ('D')) {
@@ -127,5 +130,25 @@ public class Player2D extends GameObject {
 		
 		
 				
+	}
+	
+	@Override
+	public void draw() {
+		super.draw();
+	}
+	
+	public void die () {
+		this.blackList();
+		this.hide();
+		
+		
+		this.setX(1653);
+		this.setY(385);
+		Room.setView((int)this.getX() - 480 ,(int)this.getY() - 270);
+		
+		LevelThreeGameOverScreen screen = new LevelThreeGameOverScreen();
+		screen.playMcdonaldsJingle();
+		
+		screen.declare(screen.getX(),screen.getY());
 	}
 }

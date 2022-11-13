@@ -51,7 +51,11 @@ public class SoundPlayer implements LineListener{
 		
 	}
 	public void stop () {
+		try {
 		clip.stop();
+		} catch (NullPointerException e) {
+			
+		}
 	}
 	public boolean isPlaying () {
 		return playing;

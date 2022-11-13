@@ -1,5 +1,7 @@
 package gameObjects;
 
+import java.util.Random;
+
 import engine.GameCode;
 import engine.GameObject;
 import engine.Sprite;
@@ -37,6 +39,8 @@ public class GreenSlide extends GameObject {
 			coliding = true;
 			Player2D player = (Player2D)this.getCollisionInfo().getCollidingObjects().get(0);
 			if (!player.onGreenSlide) {
+				Random r = new Random ();
+				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/Wee" + (r.nextInt(2) + 1) + ".wav");
 				player.dontUseSpriteHitbox();
 				player.setSprite(new Sprite ("resources/sprites/daveSlide.txt"));
 				player.getAnimationHandler().setFrameTime(100);

@@ -1,5 +1,8 @@
 package gameObjects;
 
+import java.util.Random;
+
+import engine.GameCode;
 import engine.GameObject;
 import engine.Sprite;
 
@@ -21,6 +24,8 @@ public class RedSlide extends GameObject {
 			player.setSprite(new Sprite ("resources/sprites/daveSlide.txt"));
 			player.getAnimationHandler().setFrameTime(100);
 			if (!player.onRedSlide) {
+				Random r = new Random ();
+				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/Wee" + (r.nextInt(2) + 1) + ".wav");
 				player.onRedSlide = true;
 			}
 		}

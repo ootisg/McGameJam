@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import engine.GameCode;
 import engine.GameObject;
+import engine.ObjectHandler;
 import engine.RenderLoop;
 import engine.Sprite;
 import engine.V2;
@@ -19,6 +20,7 @@ public class Employee2D2 extends McdonaldsEmployee {
 	
 	int timer = 0;
 	boolean moveRight = true;
+	Player2D player;
 	
 	public Employee2D2 () {
 		b = new SpriteBitch ();
@@ -31,6 +33,10 @@ public class Employee2D2 extends McdonaldsEmployee {
 	
 	@Override
 	public void frameEvent () {
+		if (player == null) {
+			player = (Player2D)ObjectHandler.getObjectsByName("Player2D").get(0);
+		}
+		
 		if (moveRight) {
 			this.setX(this.getX() + 3);
 		} else {
@@ -92,6 +98,13 @@ public class Employee2D2 extends McdonaldsEmployee {
 						//ColidableVector toPixel = new ColidableVector (new Point ((int)this.getX(),(int)this.getY()), new Point (i,j)); 
 						g.fillRect(i - Room.getViewX(),j - Room.getViewY(),4,4);
 						
+						try {
+							if (collide (pos, offs2, player.hitbox()) && !player.isBlackListed()) {
+								player.die();
+							}
+						} catch (NullPointerException e) {
+							
+						}
 						
 						//looked at
 						/*if (toPixel.isColliding(GameCode.getLevel().player)) {
