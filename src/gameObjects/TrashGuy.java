@@ -8,7 +8,7 @@ import engine.Sprite;
 
 public class TrashGuy extends TalkableNPC {
 
-	boolean mad = false;
+	static boolean mad = false;
 	
 	public TrashGuy () {
 		this.setSprite(new Sprite ("resources/sprites/trashGuy.png"));
@@ -43,7 +43,7 @@ public class TrashGuy extends TalkableNPC {
 		}
 	}
 	
-	public boolean isMad () {
+	public static boolean isMad () {
 		return mad;
 	}
 }
