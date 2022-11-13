@@ -10,6 +10,8 @@ public class GreenSlide extends GameObject {
 		this.useSpriteHitbox();
 		this.enablePixelCollisions();
 		this.setRenderPriority(-1);
+		EndLoader load = new EndLoader ();
+		load.declare(1987, 931);
 	}
 
 	@Override

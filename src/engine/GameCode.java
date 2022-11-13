@@ -20,12 +20,14 @@ public class GameCode {
 	static int veiwX;
 	static int veiwY;
 	
-	static Level currentLevel;
+	public static Level currentLevel;
 	
 
 	static ArrayList <Asker> askers = new ArrayList <Asker> ();
 	
 	static SoundPlayer s;
+	
+	public static boolean drawRoom = true;
 
 
 	public static void testBitch () {
@@ -42,18 +44,16 @@ public class GameCode {
 	}
 
 	public static void init () {
-<<<<<<< HEAD
-		//Level outside = new OutsideMcDonalds ();
-		//currentLevel = outside;
-		//outside.load ();
-=======
+//		Level outside = new OutsideMcDonalds ();
+//		currentLevel = outside;
+//		outside.load ();
+
 		Level outside = new InsideMcDonalds ();
 		currentLevel = outside;
 		outside.load ();
->>>>>>> b15d33b3c87a87217fb4133f06e1092a1919d443
-		ObjectHandler.addSearchPackage("gameObjects");
+		//ObjectHandler.addSearchPackage("gameObjects");
 		
-		Room.loadRoom ("resources/mapdata/mcDungeon.tmj");
+		//Room.loadRoom ("resources/mapdata/mcDungeon.tmj");
 	
 		
 		
@@ -160,8 +160,11 @@ public class GameCode {
 	
 	
 	public static void renderFunc () {
-		Room.render();
+		if (drawRoom) {
+			Room.render();
+		}
 		ObjectHandler.renderAll();
+		
 	}
 	
 	public static void beforeRender() {

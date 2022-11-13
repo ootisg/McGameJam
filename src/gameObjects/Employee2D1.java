@@ -20,6 +20,7 @@ public class Employee2D1 extends McdonaldsEmployee {
 	public Employee2D1 () {
 		b = new SpriteBitch ();
 		this.setSprite(new Sprite ("resources/sprites/baby.txt"));
+		b.getAnimationHandler().setFrameTime(100);
 		this.radiusX = 200;
 	}
 	

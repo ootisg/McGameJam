@@ -9,12 +9,14 @@ public class InsideMcDonalds extends Level {
 	
 	public static final Sprite coolaidBreakIn = new Sprite ("resources/bg/coolaidman_breakin.png");
 	
+	EnterMcdonaldsCutscene e = new EnterMcdonaldsCutscene();
+	
 	private Backgrounder bg;
 	
 	public InsideMcDonalds () {
 		
 		collision = new ArrayList<Rectangle> ();
-		
+		e.declare();
 	}
 	
 	@Override

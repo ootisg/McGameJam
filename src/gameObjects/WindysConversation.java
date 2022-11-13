@@ -1,7 +1,12 @@
 package gameObjects;
 
+import java.util.ArrayList;
+
 import engine.GameCode;
+import engine.GameObject;
+import engine.ObjectHandler;
 import engine.Sprite;
+import map.Room;
 
 public class WindysConversation extends CodecConversation{
 	
@@ -11,6 +16,7 @@ public class WindysConversation extends CodecConversation{
 	
 	public WindysConversation () {
 	
+		this.setRenderPriority(1000000);
 	}
 	@Override
 	public void frameEvent () {
@@ -22,14 +28,30 @@ public class WindysConversation extends CodecConversation{
 			this.changeConverser2Charictar(new Sprite ("resources/sprites/WendysEmpIdle.txt"));
 			converser2.getAnimationHandler().setFlipHorizontal(false);
 			GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/Windys1.wav");
-			t.changeText("~A200~~Cwhite~NOOO MY ICE CREAM MACHINE! WHAT HAVE YOU DONE!? WE'RE BOTH FUCKED NOW!");
+			t.changeText("~A200~~Cwhite~IM READY FOR PAYBACK");
+			Room.setView(0,0);	
 		}
 		
 		if (t.isEmpty()) {
 			if (conversationState == 7) {
 				fadeOut = true;
+				FinalFight f = new FinalFight ();
+				f.declare();
 			}
 			if (conversationState == 6) {
+				GameCode.drawRoom = false;
+				
+				ArrayList<ArrayList<GameObject>> allObs = ObjectHandler.getChildrenByName("GameObject");
+				
+				for (int i = 0; i < allObs.size(); i++) {
+					for (int j = 0; j <allObs.get(i).size(); j++) {
+						if (!allObs.get(i).get(j).equals(this)) {
+							allObs.get(i).get(j).forget();
+						}
+					}
+					
+				}
+				
 				t.pushString("~Cwhite~YOU CAN'T FIRE ME! I ONLY WORK FOR THE SIDE OF JUSTICE! YOUR ICE CREAM MACHINE IS NEXT!");
 				t.advanceText();
 				this.setConverser1Sprite(new Sprite ("resources/sprites/daveCodecTalk.txt"));
