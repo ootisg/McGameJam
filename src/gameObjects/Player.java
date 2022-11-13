@@ -115,7 +115,8 @@ public class Player extends GameObject {
 	}
 	
 	public void die () {
-		
+		GameCode.getLevel ().unload ();
+		GameCode.getLevel ().load ();
 	}
 
 	@Override

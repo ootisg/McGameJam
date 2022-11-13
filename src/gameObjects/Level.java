@@ -9,6 +9,7 @@ import engine.GameObject;
 public class Level {
 	
 	public ArrayList<Rectangle> collision;
+	public ArrayList<Rectangle> lightBlockers;
 	
 	public Player player;
 	

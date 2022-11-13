@@ -126,8 +126,9 @@ public class McdonaldsEmployee extends GameObject {
 		V2 pos = new V2 ((float)getX (), (float)getY ());
 		
 		LevelWall l = new LevelWall ();
-		for (int i = align ((int)this.getX() - radiusX, 4); i < align ((int)this.getX() + radiusY, 4); i = i + 4) {
-			for (int j = align ((int)this.getY() - radiusX, 4); j < align ((int)this.getY() + radiusY, 4); j = j + 4) {
+		int blockSize = 8;
+		for (int i = align ((int)this.getX() - radiusX, blockSize); i < align ((int)this.getX() + radiusY, blockSize); i = i + blockSize) {
+			for (int j = align ((int)this.getY() - radiusX, blockSize); j < align ((int)this.getY() + radiusY, blockSize); j = j + blockSize) {
 				
 				double xOffs = i - this.getX();
 				double yOffs = j - this.getY();
@@ -147,7 +148,7 @@ public class McdonaldsEmployee extends GameObject {
 						
 						//ColidableVector toPixel = new ColidableVector (new Point ((int)this.getX(),(int)this.getY()), new Point (i,j)); 
 						
-						ArrayList <Rectangle> walls = GameCode.getLevel().collision;
+						ArrayList <Rectangle> walls = GameCode.getLevel().lightBlockers;
 						boolean hitWall = false;
 						
 						for (int k = 0; k < walls.size(); k++) {
@@ -160,22 +161,47 @@ public class McdonaldsEmployee extends GameObject {
 						
 						//looked at
 						if (!hitWall) {
-						g.fillRect(i,j,4,4);
+						g.fillRect(i,j,blockSize,blockSize);
 						}
-						/*if (toPixel.isColliding(GameCode.getLevel().player)) {
+						/*if (GameCode.getLevel().player.hitbox () != null && contender1 < 1 && collide (pos, offs2, GameCode.getLevel().player.hitbox ())) {
+							System.out.println (this);
+							System.out.println (getX () + ", " + getY ());
+							System.out.println (GameCode.getLevel ().player.hitbox ().x + ", " + GameCode.getLevel ().player.hitbox ().y);
+							System.out.println (xOffs + ", " + yOffs);
+							System.out.println (xOffs * xOffs + yOffs * yOffs);
+							System.out.println (radiusX * radiusX);
+							System.out.println (i + ", " + j);
 							GameCode.getLevel().player.die();
 						}*/
 					}
 				}
 			}
-			
-			
-			
+			ArrayList <Rectangle> walls = GameCode.getLevel().lightBlockers;
+			boolean hitWall = false;
+			V2 lookFrom = new V2 ((int)this.getX (), (int)this.getY ());
+			V2 lookTo = new V2 ((int)(GameCode.getLevel ().player.getCenterX ()), (int)(GameCode.getLevel ().player.getCenterY ()));
+			V2 lookVec = lookFrom.diff (lookTo);
+			double len = lookVec.len ();
+			lookVec.normalize ();
+			if (len < radiusX) {
+				if (lookVec.dot (faceVector) > Math.cos (Math.toRadians (fov))) {
+					for (int k = 0; k < walls.size(); k++) {
+						Rectangle r = new Rectangle (walls.get(k).x, walls.get(k).y, walls.get(k).width, walls.get(k).height);
+						if (collide (lookFrom, lookTo, r)) {
+							hitWall = true;
+						}
+					}
+					if (hitWall == false) {
+						GameCode.getLevel ().player.die ();
+					}
+				}
+			}
 		}
 	}
 	
 	@Override
 	public void frameEvent () {
+		
 		if (pauseCounter <= 0) {
 			if (pathIter == null) {
 				pathIter = path.listIterator ();
@@ -231,7 +257,6 @@ public class McdonaldsEmployee extends GameObject {
 						toPt = pathIter.next ();
 					}
 				}
-				System.out.println (fromPt + "," + toPt);
 			}
 			V2 offs = new V2 ((float)(toPt.x - getX ()), (float)(toPt.y - getY ()));
 			offs.normalize ();
