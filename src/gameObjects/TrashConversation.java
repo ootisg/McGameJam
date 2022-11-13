@@ -40,7 +40,7 @@ public class TrashConversation extends CodecConversation{
 				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/TrashCodec3.wav");
 			}
 			if (conversationState == 1) {
-				t.pushString("~Cwhite~I JUST TOOK THE TRASH OUT TO THE TRASHCAN. I REALLY HOPE THOSE DUMPSTER DIVERS DON'T TAKE IT OUT LIKE THE USUALLY DO.");
+				t.pushString("~Cwhite~I JUST TOOK THE TRASH OUT TO THE TRASHCAN. I REALLY HOPE THOSE DUMPSTER DIVERS DON'T TAKE IT OUT LIKE THEY USUALLY DO.");
 				t.advanceText();
 				this.setConverser1Sprite(new Sprite ("resources/sprites/daveCodecIdle.txt"));
 				this.setConverser2Sprite(new Sprite ("resources/sprites/trashCodecTalk.txt"));

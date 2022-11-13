@@ -36,6 +36,8 @@ public class KoolAidConversation extends CodecConversation{
 				this.setConverser1Sprite(new Sprite ("resources/sprites/daveCodecTalk.txt"));
 				this.setConverser2Sprite(new Sprite ("resources/sprites/koolaidmanIdle.txt"));
 				GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/OhYeahCodec7.wav");
+				OutsideMcDonalds.entr.whiteList();
+				OutsideMcDonalds.entr.show();
 				conversationState = 7;
 			}
 			if (conversationState == 5) {

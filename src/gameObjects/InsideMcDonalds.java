@@ -11,17 +11,26 @@ public class InsideMcDonalds extends Level {
 	
 	public static final Sprite coolaidBreakIn = new Sprite ("resources/bg/coolaidman_breakin.png");
 	
+	EnterMcdonaldsCutscene e = new EnterMcdonaldsCutscene();
+	
 	private Backgrounder bg;
 	public StuffMeter stuffMeter;
 	public OverlayGuide ol;
 	
 	private PotatoSack potato;
+	private Mop mop;
+	private Jam jam;
+	private IceCreamGrabbable iceCream;
+	private IceCreamMachine toJam;
+	private McPhone mcPhone;
+	private Jesus jesus;
 	
 	public InsideMcDonalds () {
 		
 		collision = new ArrayList<Rectangle> ();
 		lightBlockers = new ArrayList<Rectangle> ();
 		
+		e.declare();
 	}
 	
 	@Override
@@ -42,7 +51,15 @@ public class InsideMcDonalds extends Level {
 		empA.declare (53, 183);
 		potato = new PotatoSack ();
 		potato.declare (8, 8);
-		
+		mop = new Mop ();
+		mop.declare (571, 46);
+		jam = new Jam ();
+		jam.declare (927, 505);
+		iceCream = new IceCreamGrabbable ();
+		iceCream.declare (639, 299);
+		toJam = new IceCreamMachine ();
+		mcPhone = new McPhone ();
+		jesus = new Jesus ();
 		
 		collision.add (new Rectangle (0, 55, 84, 120)); //Grill
 		collision.add (new Rectangle (0, 180, 49, 188)); //Fryer
@@ -74,11 +91,24 @@ public class InsideMcDonalds extends Level {
 				curr.get (j).forget ();
 			}
 		}
+		ArrayList<GameObject> distractionGuy = ObjectHandler.getObjectsByName ("DistractionGuy");
+		if (distractionGuy != null && distractionGuy.size () != 0) {
+			distractionGuy.get (0).forget ();
+		}
 		player.forget ();
 		bg.forget ();
 		collision = new ArrayList<Rectangle> ();
 		lightBlockers = new ArrayList<Rectangle> ();
 		stuffMeter.forget ();
+		
+		potato.forget ();
+		jam.forget ();
+		mop.forget ();
+		iceCream.forget ();
+		toJam.forget ();
+		mcPhone.forget ();
+		jesus.forget ();
+		
 	}
 	
 }

@@ -1,0 +1,3 @@
+$src resources/sprites/Baby.png
+
+ grid 31 49

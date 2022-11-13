@@ -14,6 +14,8 @@ public class RegisterGuy extends McdonaldsEmployee {
 	double targetAng = 0;
 	V2 alertVec;
 	
+	DistractionGuy distraction = null;
+	
 	int timer = 0;
 	
 	double currAng = Math.PI / 2;
@@ -21,13 +23,22 @@ public class RegisterGuy extends McdonaldsEmployee {
 	public RegisterGuy () {
 		this.faceVector = new V2 (0, 1);
 		setSprite (downSprite);
+		this.getAnimationHandler ().setFrameTime (0);
+	}
+	
+	public void distract () {
+		distraction = new DistractionGuy ();
+		distraction.declare (787, 511);
 	}
 	
 	@Override
 	public void frameEvent () {
 		double diffX = GameCode.getLevel ().player.getX () - getX ();
 		double diffY = GameCode.getLevel ().player.getY () - getY ();
-		if (!alert && !doneAlert && Math.hypot (diffX, diffY) < 320) {
+		if (distraction != null && !distraction.declared ()) {
+			distraction = null;
+		}
+		if (!alert && !doneAlert && Math.hypot (diffX, diffY) < 320 && distraction == null) {
 			alert = true;
 			targetAng = Math.atan2 (diffX, diffY);
 			alertVec = new V2 ((float)diffX, (float)diffY);

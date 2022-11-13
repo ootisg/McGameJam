@@ -1,5 +1,6 @@
 package gameObjects;
 
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -16,6 +17,8 @@ public class Player extends GameObject {
 	public static final Sprite UP = new Sprite ("resources/sprites/daveUp.txt");
 	public static final Sprite DOWN = new Sprite ("resources/sprites/daveDown.txt");
 	
+	public GameObject tutorialTxt;
+	
 	public int lastDirection = 0; //0 for right, 1 for left
 	
 	public Player () {
@@ -23,6 +26,22 @@ public class Player extends GameObject {
 		this.useSpriteHitbox();
 		this.getAnimationHandler().setFrameTime(50);
 		setRenderPriority (1);
+	}
+	
+	public void showTutorialTxt (GameObject obj) {
+		tutorialTxt = obj;
+		tutorialTxt.declare (getX () - 16, getY () - 32);
+	}
+	
+	public void hideTutorialTxt () {
+		if (tutorialTxt != null) {
+			tutorialTxt.forget ();
+			tutorialTxt = null;
+		}
+	}
+	
+	public boolean hasTutorialTxt () {
+		return tutorialTxt != null;
 	}
 	
 	@Override
@@ -65,7 +84,7 @@ public class Player extends GameObject {
 				this.getAnimationHandler().setFrameTime(0);
 			}
 		}
-		if (GameCode.getLevel() != null && GameCode.getLevel ().isColliding (this)) {
+		if (GameCode.getLevel() != null && (GameCode.getLevel ().isColliding (this) || !new Rectangle (-80, -80, 1120, 700).intersects (hitbox ()))) {
 			setX (xprev);
 			setY (yprev);
 		}
@@ -122,6 +141,10 @@ public class Player extends GameObject {
 	@Override
 	public void draw () {
 		super.draw ();
+		if (tutorialTxt != null) {
+			tutorialTxt.setX (getX () - 16);
+			tutorialTxt.setY (getY () - 32);
+		}
 		if (carrying == null && isColliding ("RockSource")) {
 			RockSource.getEnterForRocks ().show ();
 			if (RockSource.getEnterForRocks ().tooManyRocks ()) {

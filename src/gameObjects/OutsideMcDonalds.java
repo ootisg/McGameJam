@@ -22,6 +22,9 @@ public class OutsideMcDonalds extends Level {
 	
 	public static final Sprite coolaidBreakIn = new Sprite ("resources/bg/coolaidman_breakin.png");
 	
+	static Entrance entr = new Entrance (coolaidBreakIn);
+	
+	
 	public OutsideMcDonalds () {
 		collision = new ArrayList<Rectangle> ();
 	}
@@ -38,7 +41,7 @@ public class OutsideMcDonalds extends Level {
 		player.declare ();
 		check.declare();
 		
-		Entrance entr = new Entrance (coolaidBreakIn);
+	
 		entr.declare (254, 45);
 		entr.hide();
 		entr.setHitboxAttributes (87, 37);
@@ -50,7 +53,7 @@ public class OutsideMcDonalds extends Level {
 		smoke.declare(400, 20);
 		wind.declare(560, 76);
 		
-		check.setEntrince(entr);
+//		check.setEntrince(entr);
 		
 		entr.blackList();
 		

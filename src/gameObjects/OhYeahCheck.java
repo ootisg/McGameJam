@@ -10,7 +10,7 @@ public class OhYeahCheck extends TalkableNPC{
 	
 	@Override
 	public void frameEvent () {
-		if (SmokingGuy.mad && LawnMowerGuy.isBlownUp() && TrashGuy.isMad() && !GameCode.getLevel().player.isBlackListed()) {
+		if (!fadeOut && !talking&& SmokingGuy.mad && LawnMowerGuy.isBlownUp() && TrashGuy.isMad() && !GameCode.getLevel().player.isBlackListed() && OutsideMcDonalds.entr.isBlackListed()) {
 			GameCode.getLevel().player.blackList();
 			fadeOut = true;
 		}

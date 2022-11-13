@@ -29,6 +29,9 @@ public class IntroConversation extends CodecConversation {
 		if (t.isEmpty()) {
 			if (conversationState == 6) {
 				fadeOut = true;
+				Level outside = new OutsideMcDonalds ();
+				GameCode.currentLevel = outside;
+				outside.load ();
 			}
 			if (conversationState == 5) {
 				t.pushString("~Cwhite~GOOD LUCK ON YOUR MISSION!");

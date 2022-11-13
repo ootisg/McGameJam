@@ -11,6 +11,7 @@ import java.util.ListIterator;
 import engine.ColidableVector;
 import engine.GameCode;
 import engine.GameObject;
+import engine.ObjectHandler;
 import engine.RenderLoop;
 import engine.Sprite;
 import engine.V2;
@@ -20,6 +21,7 @@ public class McdonaldsEmployee extends GameObject {
 	public static final Sprite upSprite = new Sprite ("resources/sprites/mcdonaldsEmployeeUp.txt");
 	public static final Sprite downSprite = new Sprite ("resources/sprites/mcdonaldsEmployeeDown.txt");
 	public static final Sprite leftSprite = new Sprite ("resources/sprites/mcdonaldsEmployeeLeft.txt");
+	public static final Sprite idleSprite = new Sprite ("resources/sprites/mcdonaldsEmployeeIdle.txt");
 	
 	public static final V2 upVec = new V2 (0, -1);
 	public static final V2 downVec = new V2 (0, 1);
@@ -113,7 +115,7 @@ public class McdonaldsEmployee extends GameObject {
 		return false;
 	}
 	
-	private int align (int val, int align) {
+	protected int align (int val, int align) {
 		val -= val % align;
 		return val;
 	}
@@ -122,7 +124,7 @@ public class McdonaldsEmployee extends GameObject {
 	public void draw() {
 		super.draw();
 		Graphics g = RenderLoop.wind.getBufferGraphics();
-		g.setColor(new Color (230,225,108,55));
+		g.setColor(new Color (230,225,108,100));
 		V2 pos = new V2 ((float)getX (), (float)getY ());
 		
 		LevelWall l = new LevelWall ();
@@ -201,124 +203,125 @@ public class McdonaldsEmployee extends GameObject {
 	
 	@Override
 	public void frameEvent () {
-		
-		if (pauseCounter <= 0) {
-			if (pathIter == null) {
-				pathIter = path.listIterator ();
-			}
-			if (fromPt == null) {
-				fromPt = pathIter.next ();
-				toPt = pathIter.next ();
-			}
-			double xDiff = getX () - toPt.x;
-			double yDiff = getY () - toPt.y;
-			double dist = Math.hypot (xDiff, yDiff);
-			ang = Math.atan2 (xDiff, yDiff);
-			if (dist < 5) {
-				if (aiType == 0) {
-					if (direction == false) {
+		if (!ObjectHandler.getObjectsByName ("Player").get (0).isBlackListed ()) {
+			if (pauseCounter <= 0) {
+				if (pathIter == null) {
+					pathIter = path.listIterator ();
+				}
+				if (fromPt == null) {
+					fromPt = pathIter.next ();
+					toPt = pathIter.next ();
+				}
+				double xDiff = getX () - toPt.x;
+				double yDiff = getY () - toPt.y;
+				double dist = Math.hypot (xDiff, yDiff);
+				ang = Math.atan2 (xDiff, yDiff);
+				if (dist < 5) {
+					if (aiType == 0) {
+						if (direction == false) {
+							fromPt = toPt;
+							setX (fromPt.x);
+							setY (fromPt.y);
+							pauseCounter = fromPt.pauseTime;
+							if (pathIter.hasNext ()) {
+								toPt = pathIter.next ();
+								//turning = true;
+							} else {
+								direction = true;
+								pathIter.previous ();
+								toPt = pathIter.previous ();
+								//turning = true;
+							}
+						} else {
+							fromPt = toPt;
+							setX (fromPt.x);
+							setY (fromPt.y);
+							pauseCounter = fromPt.pauseTime;
+							if (pathIter.hasPrevious ()) {
+								toPt = pathIter.previous ();
+								//turning = true;
+							} else {
+								direction = false;
+								pathIter.next ();
+								toPt = pathIter.next ();
+								//turning = true;
+							}
+						}
+					} else {
 						fromPt = toPt;
 						setX (fromPt.x);
 						setY (fromPt.y);
 						pauseCounter = fromPt.pauseTime;
 						if (pathIter.hasNext ()) {
 							toPt = pathIter.next ();
-							//turning = true;
 						} else {
-							direction = true;
-							pathIter.previous ();
-							toPt = pathIter.previous ();
-							//turning = true;
-						}
-					} else {
-						fromPt = toPt;
-						setX (fromPt.x);
-						setY (fromPt.y);
-						pauseCounter = fromPt.pauseTime;
-						if (pathIter.hasPrevious ()) {
-							toPt = pathIter.previous ();
-							//turning = true;
-						} else {
-							direction = false;
-							pathIter.next ();
+							pathIter = path.listIterator ();
 							toPt = pathIter.next ();
-							//turning = true;
 						}
 					}
-				} else {
-					fromPt = toPt;
-					setX (fromPt.x);
-					setY (fromPt.y);
-					pauseCounter = fromPt.pauseTime;
-					if (pathIter.hasNext ()) {
-						toPt = pathIter.next ();
-					} else {
-						pathIter = path.listIterator ();
-						toPt = pathIter.next ();
+				}
+				V2 offs = new V2 ((float)(toPt.x - getX ()), (float)(toPt.y - getY ()));
+				offs.normalize ();
+				float spd = 1;
+				setX (getX () + faceVector.x * spd);
+				setY (getY () + faceVector.y * spd);
+				int dir = -1;
+				double largest = -1;
+				double[] dots = new double[4];
+				dots[0] = faceVector.dot (upVec);
+				dots[1] = faceVector.dot (leftVec);
+				dots[2] = faceVector.dot (downVec);
+				dots[3] = faceVector.dot (rightVec);
+	 			for (int i = 0; i < 4; i++) {
+					if (dots[i] > largest) {
+						largest = dots[i];
+						dir = i;
 					}
 				}
-			}
-			V2 offs = new V2 ((float)(toPt.x - getX ()), (float)(toPt.y - getY ()));
-			offs.normalize ();
-			float spd = 1;
-			setX (getX () + faceVector.x * spd);
-			setY (getY () + faceVector.y * spd);
-			int dir = -1;
-			double largest = -1;
-			double[] dots = new double[4];
-			dots[0] = faceVector.dot (upVec);
-			dots[1] = faceVector.dot (leftVec);
-			dots[2] = faceVector.dot (downVec);
-			dots[3] = faceVector.dot (rightVec);
- 			for (int i = 0; i < 4; i++) {
-				if (dots[i] > largest) {
-					largest = dots[i];
-					dir = i;
+	 			if (getAnimationHandler ().getFrameTime () == 0) {
+	 				getAnimationHandler ().setFrameTime (100);
+	 			}
+	 			if (currDir != dir) {
+	 				switch (dir) {
+	 					case 0:
+	 						setSprite (upSprite);
+	 						this.getAnimationHandler ().setFlipHorizontal (false);
+	 						break;
+	 					case 1:
+	 						setSprite (leftSprite);
+	 						this.getAnimationHandler ().setFlipHorizontal (true);
+	 						break;
+	 					case 2:
+	 						setSprite (downSprite);
+	 						this.getAnimationHandler ().setFlipHorizontal (false);
+	 						break;
+	 					case 3:
+	 						setSprite (leftSprite);
+	 						this.getAnimationHandler ().setFlipHorizontal (false);
+	 						break;
+	 				}
+	 			}
+				if (!turning && pauseCounter <= 0) {
+					faceVector = offs;
 				}
-			}
- 			if (getAnimationHandler ().getFrameTime () == 0) {
- 				getAnimationHandler ().setFrameTime (100);
- 			}
- 			if (currDir != dir) {
- 				switch (dir) {
- 					case 0:
- 						setSprite (upSprite);
- 						this.getAnimationHandler ().setFlipHorizontal (false);
- 						break;
- 					case 1:
- 						setSprite (leftSprite);
- 						this.getAnimationHandler ().setFlipHorizontal (true);
- 						break;
- 					case 2:
- 						setSprite (downSprite);
- 						this.getAnimationHandler ().setFlipHorizontal (false);
- 						break;
- 					case 3:
- 						setSprite (leftSprite);
- 						this.getAnimationHandler ().setFlipHorizontal (false);
- 						break;
- 				}
- 			}
-			if (!turning && pauseCounter <= 0) {
-				faceVector = offs;
-			}
-		} else {
-			pauseCounter -= 1;
-			if (pauseCounter < 0) {
-				pauseCounter = 0;
-			}
-			getAnimationHandler ().setAnimationFrame (0);
-			getAnimationHandler ().setFrameTime (0);
-			/*double currAng = Math.atan2 (faceVector.x, faceVector.y);
-			V2 offs = new V2 ((float)(toPt.x - getX ()), (float)(toPt.y - getY ()));
-			double toAng = Math.atan2 (offs.x, offs.y);
-			System.out.println (Math.abs (currAng - toAng));
-			if (Math.abs (currAng - toAng) < Math.PI / 90) {
-				turning = false;
 			} else {
-				ang += currAng - toAng < 0 ? (-Math.PI / 360) : (Math.PI / 360);
-				faceVector = new V2 ((float)Math.cos (ang), (float)Math.sin (ang));
-			}*/
+				pauseCounter -= 1;
+				if (pauseCounter < 0) {
+					pauseCounter = 0;
+				}
+				getAnimationHandler ().setAnimationFrame (0);
+				getAnimationHandler ().setFrameTime (0);
+				/*double currAng = Math.atan2 (faceVector.x, faceVector.y);
+				V2 offs = new V2 ((float)(toPt.x - getX ()), (float)(toPt.y - getY ()));
+				double toAng = Math.atan2 (offs.x, offs.y);
+				System.out.println (Math.abs (currAng - toAng));
+				if (Math.abs (currAng - toAng) < Math.PI / 90) {
+					turning = false;
+				} else {
+					ang += currAng - toAng < 0 ? (-Math.PI / 360) : (Math.PI / 360);
+					faceVector = new V2 ((float)Math.cos (ang), (float)Math.sin (ang));
+				}*/
+			}
 		}
 	}
 	
