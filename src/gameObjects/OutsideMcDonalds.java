@@ -15,6 +15,8 @@ public class OutsideMcDonalds extends Level {
 	LawnMowerGuy guy = new LawnMowerGuy();
 	HappyEmployee guy2 = new HappyEmployee();
 	DrivethroughLoudspeaker speaker = new DrivethroughLoudspeaker();
+	TrashGuy trash = new TrashGuy();
+	SmokingGuy smoke = new SmokingGuy ();
 	
 	public static final Sprite coolaidBreakIn = new Sprite ("resources/bg/coolaidman_breakin.png");
 	
@@ -40,6 +42,9 @@ public class OutsideMcDonalds extends Level {
 		guy.declare(690, 505);
 		guy2.declare(500,375);
 		speaker.declare();
+		trash.declare(180, 220);
+		smoke.declare(400, 20);
+		
 		
 		collision.add (new Rectangle (207, 82, 494, 291));
 		collision.add (new Rectangle (0, 191, 69, 128));
