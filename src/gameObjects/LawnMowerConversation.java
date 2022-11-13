@@ -28,6 +28,7 @@ public class LawnMowerConversation extends CodecConversation{
 		
 		if (t.isEmpty()) {
 			if (conversationState == 5) {
+				GameCode.getSoundPlayer().stopAll();
 				fadeOut = true;
 			}
 			if (conversationState == 4) {

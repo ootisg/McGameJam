@@ -27,6 +27,7 @@ public class McDungeonConversation extends CodecConversation{
 		
 		if (t.isEmpty()) {
 			if (conversationState == 5) {
+				GameCode.getSoundPlayer().stopAll();
 				fadeOut = true;
 				GameCode.getSoundPlayer().play("resources/sound/McDungeon.wav", 6F);
 				GameCode.drawRoom = true;
