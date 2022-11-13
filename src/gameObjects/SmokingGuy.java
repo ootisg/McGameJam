@@ -8,8 +8,8 @@ import engine.Sprite;
 
 public class SmokingGuy extends TalkableNPC {
 
-	boolean mad = false;
-	boolean talkedTo = false;
+	static boolean mad = false;
+	static boolean talkedTo = false;
 	
 	public SmokingGuy () {
 		this.setSprite(new Sprite ("resources/sprites/smokingEmployee.txt"));
@@ -29,10 +29,10 @@ public class SmokingGuy extends TalkableNPC {
 		}
 	}
 	
-	public boolean haveBeenTalkedToo() {
+	public static boolean haveBeenTalkedToo() {
 		return talkedTo;
 	}
-	public void makeMad () {
+	public static void makeMad () {
 		mad = true;
 	}
 	
