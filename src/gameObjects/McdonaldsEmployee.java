@@ -113,7 +113,7 @@ public class McdonaldsEmployee extends GameObject {
 		return false;
 	}
 	
-	private int align (int val, int align) {
+	protected int align (int val, int align) {
 		val -= val % align;
 		return val;
 	}
