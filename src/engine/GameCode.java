@@ -42,7 +42,7 @@ public class GameCode {
 	}
 
 	public static void init () {
-		Level outside = new OutsideMcDonalds ();
+		Level outside = new InsideMcDonalds ();
 		currentLevel = outside;
 		outside.load ();
 		ObjectHandler.addSearchPackage("gameObjects");
