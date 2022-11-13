@@ -22,7 +22,7 @@ public class DrivethroughConversation extends CodecConversation{
 			this.changeConverser1Charictar(new Sprite ("resources/sprites/daveCodecIdle.txt"));
 			this.changeConverser2Charictar(new Sprite ("resources/sprites/peterCodecTalk.txt"));
 			converser2.getAnimationHandler().setFlipHorizontal(false);
-			t.changeText("~P50~~Cwhite~DING, FRIES ARE DONE. DING, FRIES ARE DONE. DING, FRIES ARE DONE. DING, FRIES ARE DONE.");
+			t.changeText("~A300~~P30~~Cwhite~DING, FRIES ARE DONE. DING, FRIES ARE DONE. DING, FRIES ARE DONE. DING, FRIES ARE DONE.");
 			GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/ding_fries_are_done.wav");
 			
 		}

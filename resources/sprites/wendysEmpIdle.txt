@@ -1,0 +1,3 @@
+$src resources/sprites/WendysManager-codec-sheet.png
+
+rectangle 0 292 250 292
