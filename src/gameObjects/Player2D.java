@@ -19,6 +19,8 @@ public class Player2D extends GameObject {
 	
 	public boolean onRedSlide = false;
 	
+	public boolean onGreenSlide = false;
+	
 	public static final Sprite WALK = new Sprite ("resources/sprites/daveWalkSide.txt");
 	public static final Sprite IDLE = new Sprite ("resources/sprites/daveIdle.txt");
 	
@@ -38,7 +40,7 @@ public class Player2D extends GameObject {
 	public void frameEvent () {
 	
 		
-		if (!onBlueSlide && !onRedSlide) {
+		if (!onBlueSlide && !onRedSlide && !onGreenSlide) {
 			if (keyDown ('D')) {
 				this.getAnimationHandler().setFlipHorizontal(false);
 				this.setSprite(WALK);
@@ -90,7 +92,8 @@ public class Player2D extends GameObject {
 					Room.setView(Room.getViewXAcurate(),Room.getViewYAcurate() + 3);
 				}
 				
-			} else {
+			} else if (onRedSlide) {
+				
 				if (!this.goX(this.getX() + 6)){
 					
 					onRedSlide = false;
@@ -104,6 +107,18 @@ public class Player2D extends GameObject {
 				} else {
 					Room.setView(Room.getViewXAcurate(),Room.getViewYAcurate() + 2);
 				}
+			} else {
+				if (!this.goX(this.getX() + 12)){
+					onGreenSlide = false;
+				} else {
+					Room.setView(Room.getViewXAcurate() + 12,Room.getViewYAcurate());
+				}
+				this.goY(this.getY() + 1);
+//				if (!this.goY(this.getY() + 1)) {
+//					onGreenSlide = false;
+//				} else {
+//					Room.setView(Room.getViewXAcurate(),Room.getViewYAcurate() + 1);
+//				}
 			}
 		}
 		

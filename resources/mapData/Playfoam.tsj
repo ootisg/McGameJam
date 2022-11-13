@@ -1,0 +1,21 @@
+{ "columns":64,
+ "image":"Playfoam.png",
+ "imageheight":1024,
+ "imagewidth":1024,
+ "margin":0,
+ "name":"Playfoam",
+ "spacing":0,
+ "tilecount":4096,
+ "tiledversion":"1.9.0",
+ "tileheight":16,
+ "tilewidth":16,
+ "transformations":
+    {
+     "hflip":true,
+     "preferuntransformed":false,
+     "rotate":false,
+     "vflip":true
+    },
+ "type":"tileset",
+ "version":"1.8"
+}

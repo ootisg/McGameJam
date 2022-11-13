@@ -10,7 +10,7 @@ public class LawnMowerGuy extends TalkableNPC{
 	
 	public LawnMowerGuy () {
 		this.setSprite(new Sprite ("resources/sprites/lawnmower guy.txt"));
-		this.conversation = new LawnMowerConversation();
+		this.conversation = new KoolAidConversation();
 		this.getAnimationHandler().setFrameTime(100);
 	}
 	

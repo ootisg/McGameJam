@@ -1,5 +1,6 @@
 package gameObjects;
 
+import engine.GameCode;
 import engine.Sprite;
 
 public class TrashConversation2 extends CodecConversation{
@@ -21,7 +22,9 @@ public class TrashConversation2 extends CodecConversation{
 			this.changeConverser1Charictar(new Sprite ("resources/sprites/daveCodecIdle.txt"));
 			this.changeConverser2Charictar(new Sprite ("resources/sprites/trashCodecTalk.txt"));
 			converser2.getAnimationHandler().setFlipHorizontal(false);
-			t.changeText("~P50~~Cwhite~HEY FUCK YOU MAN");
+			GameCode.getSoundPlayer().playSoundEffect(6F, "resources/sound/TrashCodec4.wav");
+			t.changeText("~P50~~Cwhite~FUCK YOU MAN!");
+			
 		}
 		
 		if (t.isEmpty()) {
