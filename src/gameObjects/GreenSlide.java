@@ -15,7 +15,6 @@ public class GreenSlide extends GameObject {
 		this.setRenderPriority(-1);
 		EndLoader load = new EndLoader ();
 		load.declare(1987, 931);
-		GameCode.getSoundPlayer().play("resources/sound/McDungeon.wav", 6F);
 		
 		SoundTrigger trig1 = new SoundTrigger ("resources/sound/Crawling1.wav");
 		SoundTrigger trig2 = new SoundTrigger ("resources/sound/Crawling2.wav");
@@ -30,6 +29,8 @@ public class GreenSlide extends GameObject {
 		trig3.setHitboxAttributes(20, 5);
 		trig3.declare(1319,392);
 		
+		PlayMcDungeionCutscene c = new PlayMcDungeionCutscene ();
+		c.declare();
 		
 	}
 

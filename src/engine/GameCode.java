@@ -51,14 +51,14 @@ public class GameCode {
 //		outside.load ();
 
 
-		Level outside = new OutsideMcDonalds ();
-		currentLevel = outside;
-		outside.load ();
+	Level outside = new OutsideMcDonalds ();
+	currentLevel = outside;
+	outside.load ();
 		
-//		ObjectHandler.addSearchPackage("gameObjects");
-//		
-//		Room.loadRoom ("resources/mapdata/mcDungeon.tmj");
-//	
+		//ObjectHandler.addSearchPackage("gameObjects");
+		
+	//	Room.loadRoom ("resources/mapdata/mcDungeon.tmj");
+	
 		
 		
 		//Level outside = new OutsideMcDonalds ();
