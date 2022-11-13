@@ -6,7 +6,7 @@ import engine.Sprite;
 public class LawnMowerGuy extends TalkableNPC{
 
 	boolean moveLeft = true;
-	boolean dead = false;
+	static boolean dead = false;
 	
 	public LawnMowerGuy () {
 		this.setSprite(new Sprite ("resources/sprites/lawnmower guy.txt"));
@@ -53,7 +53,7 @@ public class LawnMowerGuy extends TalkableNPC{
 		}
 	}
 	
-	public boolean isBlownUp () {
+	static public boolean isBlownUp () {
 		return dead;
 	}
 	

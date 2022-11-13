@@ -1,0 +1,3 @@
+$src resources/sprites/McDonaldsEmployee IdleSmoking-sheet.png
+
+ grid 24 55

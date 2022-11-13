@@ -65,7 +65,7 @@ public class Player extends GameObject {
 				this.getAnimationHandler().setFrameTime(0);
 			}
 		}
-		if (GameCode.getLevel ().isColliding (this)) {
+		if (GameCode.getLevel() != null && GameCode.getLevel ().isColliding (this)) {
 			setX (xprev);
 			setY (yprev);
 		}
